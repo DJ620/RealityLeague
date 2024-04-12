@@ -1,18 +1,14 @@
-"use client";
-import { useState, useEffect } from "react";
+import dbConnect from "../lib/dbConnect";
+import User from "../models/User";
 
-export default function Page() {
-  const [users, setUsers] = useState([]);
+async function getUsers() {
+  await dbConnect();
+  const users = await User.find({});
+  return users;
+}
 
-  useEffect(() => {
-    fetchUsers().then((data: any) => setUsers(data));
-  }, []);
-
-  const fetchUsers = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASEPATH}/api/users`);
-    const users = await res.json();
-    return users;
-  };
+export default async function Page() {
+  const users = await getUsers();
 
   return (
     <div>

@@ -1,12 +1,24 @@
-import { auth, currentUser } from '@clerk/nextjs'
-import React from 'react'
+import { currentUser } from "@clerk/nextjs";
+import dbConnect from "../lib/dbConnect";
+import User from "../models/User";
+
+async function checkUser() {
+  const user = await currentUser();
+  await dbConnect();
+  let registered = await User.findOne({userId: user?.id});
+  if (registered === null) {
+    registered = User.create({userId: user?.id, username: user?.username});
+  };
+  return registered;
+}
 
 export default async function DashboardPage() {
-  const userInfo = auth();
-  const user = await currentUser();
-  console.log({userInfo});
-  console.log({user});
+  const userInfo = await checkUser();
+  console.log(userInfo._id);
+
   return (
-    <div>Dashboard Page</div>
-  )
+    <div>
+      <p>Dashboard Page</p>
+    </div>
+  );
 }
