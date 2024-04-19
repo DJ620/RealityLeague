@@ -24,9 +24,9 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
-        <body className="min-h-screen">
+        <body className="min-h-screen relative">
           <Nav />
-          <div className="flex justify-center items-center p-24">
+          <div className="p-10">
             {children}
           </div>
         </body>

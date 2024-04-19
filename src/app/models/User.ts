@@ -21,6 +21,12 @@ const userSchema: Schema = new mongoose.Schema({
       ref: "League",
     },
   ],
+  leaguesModerating: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "League",
+    },
+  ],
 });
 
 const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
