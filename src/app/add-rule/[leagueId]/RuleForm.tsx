@@ -18,9 +18,10 @@ export default function RulesForm({ addRuleToDB, leagueId }: props) {
   const [rule, setRule] = useState<string>("");
   const [value, setValue] = useState<number>(1);
 
-  const handleAddRule = () => {
+  const handleAddRule = async () => {
     const ruleToAdd = { rule, value };
-    addRuleToDB(ruleToAdd, leagueId).then((res: ILeague) => router.refresh());
+    await addRuleToDB(ruleToAdd, leagueId);
+    router.refresh();
   };
 
   return (

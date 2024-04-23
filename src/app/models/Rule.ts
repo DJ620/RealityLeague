@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
+
 export interface IRule extends Document {
   rule: string;
   value: number;

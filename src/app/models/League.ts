@@ -19,6 +19,12 @@ const leagueSchema: Schema = new mongoose.Schema({
       ref: "Rule",
     },
   ],
+  players: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Player"
+    }
+  ],
   moderators: [
     {
       type: Schema.Types.ObjectId,
