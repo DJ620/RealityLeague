@@ -3,6 +3,7 @@ import League from "@/app/models/League";
 import { IUser } from "@/app/models/User";
 import Loader from "@/components/Loader";
 import { ObjectId } from "mongoose";
+import Link from "next/link";
 
 async function getLeagueInfo(leagueId: any) {
   await dbConnect();
@@ -31,6 +32,7 @@ export default async function LeagueInfo({
         {leagueInfo.moderators.map((moderator: IUser) => {
           return <p key={moderator._id}>{moderator.username}</p>;
         })}
+        <Link href={`/add-rule/${params.leagueId}`}>Add Rules</Link>
       </div>
     </>
   );
