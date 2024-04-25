@@ -44,6 +44,7 @@ export default async function AddRule({
   }
 
   const existingRules = await getRules();
+  
   return (
     <>
       <p className="text-4xl mb-5">Create New Rule</p>
