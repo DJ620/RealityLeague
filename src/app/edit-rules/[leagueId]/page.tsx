@@ -4,13 +4,14 @@ import League from "@/app/models/League";
 import { ObjectId } from "mongoose";
 import RulesForm from "./RuleForm";
 import DeleteRule from "./DeleteRule";
+import Link from "next/link";
 
 type RuleType = {
   rule: string;
   value: number;
 };
 
-export default async function AddRule({
+export default async function EditRules({
   params,
 }: {
   params: { leagueId: ObjectId };
@@ -26,14 +27,14 @@ export default async function AddRule({
     return updatedLeague;
   }
 
-  async function getRules() {
+  async function getLeagueInfo() {
     "use server";
     await dbConnect();
     await Rule.find({});
     const league = await League.findOne({ _id: params.leagueId }).populate({
       path: "rules",
     });
-    return league.rules;
+    return league;
   }
 
   async function deleteRule(ruleId: ObjectId) {
@@ -43,11 +44,20 @@ export default async function AddRule({
     return deletedRule;
   }
 
-  const existingRules = await getRules();
-  
+  const leagueInfo = await getLeagueInfo();
+  const existingRules = leagueInfo.rules;
+
   return (
     <>
-      <p className="text-4xl mb-5">Create New Rule</p>
+      <p className="text-4xl mb-5">
+        Create New Rule for{" "}
+        <Link
+          href={`/league-info/${params.leagueId}`}
+          className="text-blue-500 hover:text-yellow-400"
+        >
+          {leagueInfo.name}
+        </Link>
+      </p>
       <RulesForm addRuleToDB={addRuleToDB} leagueId={params.leagueId} />
       {existingRules?.length > 0 && <p>Current Rules</p>}
       {existingRules.map((rule: IRule) => {
@@ -55,7 +65,6 @@ export default async function AddRule({
           <div key={rule._id}>
             <p>{rule.rule}</p>
             <p>Point value: {rule.value}</p>
-            <DeleteRule ruleId={rule._id.toString()} deleteRule={deleteRule} />
           </div>
         );
       })}

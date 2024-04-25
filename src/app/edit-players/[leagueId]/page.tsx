@@ -4,8 +4,9 @@ import Player, { IPlayer } from "@/app/models/Player";
 import { ObjectId } from "mongoose";
 import PlayerForm from "./PlayerForm";
 import DeletePlayer from "./DeletePlayer";
+import Link from "next/link";
 
-export default async function AddPlayer({
+export default async function EditPlayers({
   params,
 }: {
   params: { leagueId: ObjectId };
@@ -28,23 +29,32 @@ export default async function AddPlayer({
     return deletedPlayer;
   }
 
-  async function getPlayers() {
+  async function getLeagueInfo() {
     "use server";
     await dbConnect();
     await Player.find({});
     const league = await League.findOne({ _id: params.leagueId }).populate(
       "players"
     );
-    return league.players;
+    return league;
   }
 
-  const existingPlayers = await getPlayers();
+  const leagueInfo = await getLeagueInfo();
+  const existingPlayers = leagueInfo.players;
 
   return (
     <>
-      <p className="text-4xl mb-5">Add New Player</p>
+      <p className="text-4xl mb-5">
+        Add New Player for{" "}
+        <Link
+          href={`/league-info/${params.leagueId}`}
+          className="text-blue-500 hover:text-yellow-400"
+        >
+          {leagueInfo.name}
+        </Link>
+      </p>
       <PlayerForm addPlayer={addPlayer} leagueId={params.leagueId} />
-      {existingPlayers.length > 0 && <p>Current Players</p>}
+      {existingPlayers?.length > 0 && <p>Current Players</p>}
       {existingPlayers.map((player: IPlayer) => {
         return (
           <div key={player._id}>

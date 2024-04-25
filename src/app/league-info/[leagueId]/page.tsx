@@ -44,7 +44,7 @@ export default async function LeagueInfo({
             </div>
           );
         })}
-        <Link href={`/add-rule/${params.leagueId}`}>Edit Rules</Link>
+        <Link href={`/edit-rules/${params.leagueId}`}>Edit Rules</Link>
         {leagueInfo.players.length > 0 && <p>Players:</p>}
         {leagueInfo.players.map((player: IPlayer) => {
           return (
@@ -53,7 +53,7 @@ export default async function LeagueInfo({
             </div>
           );
         })}
-        <Link href={`/add-player/${params.leagueId}`}>Edit Players</Link>
+        <Link href={`/edit-players/${params.leagueId}`}>Edit Players</Link>
       </div>
     </>
   );
