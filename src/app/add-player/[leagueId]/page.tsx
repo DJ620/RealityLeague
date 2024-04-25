@@ -3,6 +3,7 @@ import League from "@/app/models/League";
 import Player, { IPlayer } from "@/app/models/Player";
 import { ObjectId } from "mongoose";
 import PlayerForm from "./PlayerForm";
+import DeletePlayer from "./DeletePlayer";
 
 export default async function AddPlayer({
   params,
@@ -18,6 +19,13 @@ export default async function AddPlayer({
       { $push: { players: newPlayer._id } }
     );
     return updatedLeague;
+  }
+
+  async function deletePlayer(playerId: ObjectId) {
+    "use server";
+    await dbConnect();
+    const deletedPlayer = await Player.deleteOne({ _id: playerId });
+    return deletedPlayer;
   }
 
   async function getPlayers() {
@@ -39,10 +47,14 @@ export default async function AddPlayer({
       {existingPlayers.length > 0 && <p>Current Players</p>}
       {existingPlayers.map((player: IPlayer) => {
         return (
-            <div key={player._id}>
-                <p>{player.name}</p>
-            </div>
-        )
+          <div key={player._id}>
+            <p>{player.name}</p>
+            <DeletePlayer
+              playerId={player._id.toString()}
+              deletePlayer={deletePlayer}
+            />
+          </div>
+        );
       })}
     </>
   );
