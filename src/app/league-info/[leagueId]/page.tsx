@@ -6,8 +6,10 @@ import { IUser } from "@/app/models/User";
 import Loader from "@/components/Loader";
 import { ObjectId } from "mongoose";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import DeleteLeague from "./DeleteLeague";
 
-async function getLeagueInfo(leagueId: any) {
+async function getLeagueInfo(leagueId: ObjectId) {
   await dbConnect();
   await Player.find({});
   await Rule.find({});
@@ -16,6 +18,13 @@ async function getLeagueInfo(leagueId: any) {
     .populate("rules")
     .populate("players");
   return leagueInfo;
+}
+
+async function deleteLeague(leagueId: ObjectId) {
+  "use server";
+  await dbConnect();
+  await League.deleteOne({ _id: leagueId });
+  redirect(`/dashboard`);
 }
 
 export default async function LeagueInfo({
@@ -54,6 +63,7 @@ export default async function LeagueInfo({
           );
         })}
         <Link href={`/edit-players/${params.leagueId}`}>Edit Players</Link>
+        <DeleteLeague leagueId={params.leagueId} deleteLeague={deleteLeague} />
       </div>
     </>
   );
