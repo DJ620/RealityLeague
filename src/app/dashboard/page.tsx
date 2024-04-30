@@ -35,7 +35,7 @@ export default async function DashboardPage() {
       <div className="text-center">
         <p className="text-4xl mb-5">Dashboard</p>
         <p>Welcome, {userInfo.username}</p>
-        <Link href={"/add-league"}>Add New League</Link>
+        <Link href={`/add-league/${userInfo._id}`}>Add New League</Link>
       </div>
       <Moderated leaguesModerating={userInfo.leaguesModerating} />
     </>
