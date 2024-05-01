@@ -19,8 +19,6 @@ async function checkUser() {
       username: user?.username,
     });
   }
-  console.log({ registered });
-  console.log(registered.leaguesModerating);
   return registered;
 }
 

@@ -8,24 +8,7 @@ import { ObjectId } from "mongoose";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import DeleteLeague from "./DeleteLeague";
-
-async function getLeagueInfo(leagueId: ObjectId) {
-  await dbConnect();
-  await Player.find({});
-  await Rule.find({});
-  const leagueInfo = await League.findOne({ _id: leagueId })
-    .populate("moderators")
-    .populate("rules")
-    .populate("players");
-  return leagueInfo;
-}
-
-async function deleteLeague(leagueId: ObjectId) {
-  "use server";
-  await dbConnect();
-  await League.deleteOne({ _id: leagueId });
-  redirect(`/dashboard`);
-}
+import { getLeagueInfo, deleteLeague } from "@/app/api/leagues/actions";
 
 export default async function LeagueInfo({
   params,

@@ -1,50 +1,18 @@
-import dbConnect from "@/app/lib/dbConnect";
-import Rule, { IRule } from "@/app/models/Rule";
-import League from "@/app/models/League";
+import { IRule } from "@/app/models/Rule";
 import { ObjectId } from "mongoose";
 import RulesForm from "./RuleForm";
 import DeleteRule from "./DeleteRule";
 import Link from "next/link";
-
-type RuleType = {
-  rule: string;
-  value: number;
-};
+import { addRule, deleteRule } from "@/app/api/rules/actions";
+import { getLeagueInfo } from "@/app/api/leagues/actions";
 
 export default async function EditRules({
   params,
 }: {
   params: { leagueId: ObjectId };
 }) {
-  async function addRuleToDB(rule: RuleType, leagueMongoId: ObjectId) {
-    "use server";
-    await dbConnect();
-    const newRule = await Rule.create(rule);
-    const updatedLeague = await League.findOneAndUpdate(
-      { _id: leagueMongoId },
-      { $push: { rules: newRule._id } }
-    );
-    return updatedLeague;
-  }
 
-  async function getLeagueInfo() {
-    "use server";
-    await dbConnect();
-    await Rule.find({});
-    const league = await League.findOne({ _id: params.leagueId }).populate({
-      path: "rules",
-    });
-    return league;
-  }
-
-  async function deleteRule(ruleId: ObjectId) {
-    "use server";
-    await dbConnect();
-    const deletedRule = await Rule.deleteOne({ _id: ruleId });
-    return deletedRule;
-  }
-
-  const leagueInfo = await getLeagueInfo();
+  const leagueInfo = await getLeagueInfo(params.leagueId);
   const existingRules = leagueInfo.rules;
 
   return (
@@ -58,13 +26,14 @@ export default async function EditRules({
           {leagueInfo.name}
         </Link>
       </p>
-      <RulesForm addRuleToDB={addRuleToDB} leagueId={params.leagueId} />
+      <RulesForm addRuleToDB={addRule} leagueId={params.leagueId} />
       {existingRules?.length > 0 && <p>Current Rules</p>}
       {existingRules.map((rule: IRule) => {
         return (
           <div key={rule._id}>
             <p>{rule.rule}</p>
             <p>Point value: {rule.value}</p>
+            <DeleteRule ruleId={rule._id.toString()} deleteRule={deleteRule}/>
           </div>
         );
       })}

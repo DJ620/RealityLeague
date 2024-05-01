@@ -5,41 +5,15 @@ import { ObjectId } from "mongoose";
 import PlayerForm from "./PlayerForm";
 import DeletePlayer from "./DeletePlayer";
 import Link from "next/link";
+import { getLeagueInfo } from "@/app/api/leagues/actions";
+import { addPlayer, deletePlayer } from "@/app/api/players/actions";
 
 export default async function EditPlayers({
   params,
 }: {
   params: { leagueId: ObjectId };
 }) {
-  async function addPlayer(player: string, leagueMongoId: ObjectId) {
-    "use server";
-    await dbConnect();
-    const newPlayer = await Player.create({ name: player });
-    const updatedLeague = await League.findOneAndUpdate(
-      { _id: leagueMongoId },
-      { $push: { players: newPlayer._id } }
-    );
-    return updatedLeague;
-  }
-
-  async function deletePlayer(playerId: ObjectId) {
-    "use server";
-    await dbConnect();
-    const deletedPlayer = await Player.deleteOne({ _id: playerId });
-    return deletedPlayer;
-  }
-
-  async function getLeagueInfo() {
-    "use server";
-    await dbConnect();
-    await Player.find({});
-    const league = await League.findOne({ _id: params.leagueId }).populate(
-      "players"
-    );
-    return league;
-  }
-
-  const leagueInfo = await getLeagueInfo();
+  const leagueInfo = await getLeagueInfo(params.leagueId);
   const existingPlayers = leagueInfo.players;
 
   return (

@@ -1,14 +1,21 @@
 "use client";
+import { ObjectId } from "mongoose";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
-export default function LeagueForm({ createLeague }: any) {
+type props = {
+  userId: ObjectId;
+  createLeague: (league: string, userId: ObjectId) => Promise<ObjectId>;
+}
+
+export default function LeagueForm({ userId, createLeague }: props) {
   const router = useRouter();
   const [leagueName, setLeagueName] = useState<string>("");
 
-  const handleAddLeague = (e: FormEvent) => {
+  const handleAddLeague = async (e: FormEvent) => {
     e.preventDefault();
-    createLeague(leagueName);
+    const leagueId = await createLeague(leagueName, userId);
+    router.push(`/league-info/${leagueId}`);
   };
 
   return (
