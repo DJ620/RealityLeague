@@ -16,10 +16,13 @@ export default async function LeagueInfo({
   let loading = true;
   const user = await currentUser();
   const leagueInfo = await getLeagueInfo(params.leagueId);
-  const moderators = leagueInfo.moderators.map(
-    (moderator: IUser) => moderator.username
-  );
-  const isModerator = moderators.includes(user?.username);
+  const isModerator = leagueInfo.moderators
+    .map((moderator: IUser) => moderator.username)
+    .includes(user?.username);
+  const isMember = leagueInfo.participants
+    .map((participant: IUser) => participant.username)
+    .includes(user?.username);
+  // const isModerator = moderators.includes(user?.username);
   loading = false;
   return (
     <>
@@ -65,6 +68,11 @@ export default async function LeagueInfo({
             <Link href={`/edit-players/${params.leagueId}`}>Edit Players</Link>
           )}
         </div>
+        {isMember ? (
+          <button>Leave this league</button>
+        ) : (
+          <button>Request to join {leagueInfo.name}</button>
+        )}
         {isModerator && (
           <DeleteLeague
             leagueId={params.leagueId}
