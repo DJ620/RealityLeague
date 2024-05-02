@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
 import dbConnect from "../lib/dbConnect";
 import User from "../models/User";
-import League from "../models/League";
+import League, { ILeague } from "../models/League";
 import Loader from "@/components/Loader";
 import Link from "next/link";
 import Moderated from "./Moderated";
@@ -10,9 +10,9 @@ async function checkUser() {
   const user = await currentUser();
   await dbConnect();
   await League.find({});
-  let registered = await User.findOne({ userId: user?.id }).populate({
-    path: "leaguesModerating",
-  });
+  let registered = await User.findOne({ userId: user?.id })
+    .populate("leaguesModerating")
+    .populate("leagues");
   if (registered === null) {
     registered = await User.create({
       userId: user?.id,
@@ -21,6 +21,8 @@ async function checkUser() {
   }
   return registered;
 }
+
+export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   let loading = true;
@@ -36,6 +38,16 @@ export default async function DashboardPage() {
         <Link href={`/add-league/${userInfo._id}`}>Create New League</Link>
       </div>
       <Moderated leaguesModerating={userInfo.leaguesModerating} />
+      <div>
+        <p>Participating in:</p>
+        {userInfo.leagues.map((league: ILeague) => {
+          return (
+            <div key={league._id}>
+              <p>{league.name}</p>
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 }

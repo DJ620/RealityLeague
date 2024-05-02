@@ -16,6 +16,7 @@ export default function LeagueForm({ userId, createLeague }: props) {
     e.preventDefault();
     const leagueId = await createLeague(leagueName, userId);
     router.push(`/league-info/${leagueId}`);
+    router.refresh();
   };
 
   return (

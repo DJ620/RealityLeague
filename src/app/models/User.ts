@@ -4,6 +4,7 @@ export interface IUser extends Document {
   userId: string;
   username: string;
   leagues: ILeague[];
+  leaguesModerating: ILeague[];
 }
 
 const userSchema: Schema = new mongoose.Schema({

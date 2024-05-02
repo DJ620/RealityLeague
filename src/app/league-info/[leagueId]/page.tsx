@@ -27,6 +27,14 @@ export default async function LeagueInfo({
         {leagueInfo.moderators.map((moderator: IUser) => {
           return <p key={moderator._id}>{moderator.username}</p>;
         })}
+        {leagueInfo.participants.length > 0 && <p>Participants:</p>}
+        {leagueInfo.participants.map((participant: IUser) => {
+          return (
+            <div key={participant._id}>
+              <p>{participant.username}</p>
+            </div>
+          );
+        })}
         {leagueInfo.rules.length > 0 && <p>Rules:</p>}
         {leagueInfo.rules.map((rule: IRule) => {
           return (
