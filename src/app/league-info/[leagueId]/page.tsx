@@ -5,8 +5,15 @@ import Loader from "@/components/Loader";
 import { ObjectId } from "mongoose";
 import Link from "next/link";
 import DeleteLeague from "./DeleteLeague";
-import { getLeagueInfo, deleteLeague } from "@/app/api/leagues/actions";
+import {
+  getLeagueInfo,
+  deleteLeague,
+  requestToJoinLeague,
+  acceptUserToLeague
+} from "@/app/api/leagues/actions";
 import { currentUser } from "@clerk/nextjs";
+import RequestToJoin from "./RequestToJoin";
+import HandleRequest from "./HandleRequest";
 
 export default async function LeagueInfo({
   params,
@@ -22,8 +29,11 @@ export default async function LeagueInfo({
   const isMember = leagueInfo.participants
     .map((participant: IUser) => participant.username)
     .includes(user?.username);
-  // const isModerator = moderators.includes(user?.username);
+  const isPending = leagueInfo.requests
+    .map((request: IUser) => request.username)
+    .includes(user?.username);
   loading = false;
+
   return (
     <>
       <Loader loading={loading} />
@@ -70,9 +80,28 @@ export default async function LeagueInfo({
         </div>
         {isMember ? (
           <button>Leave this league</button>
+        ) : isPending ? (
+          <p>Pending acceptance</p>
         ) : (
-          <button>Request to join {leagueInfo.name}</button>
+          <RequestToJoin
+            userId={user?.id}
+            leagueId={params.leagueId}
+            leagueName={leagueInfo.name}
+            requestToJoinLeague={requestToJoinLeague}
+          />
         )}
+        {isModerator && leagueInfo.requests.length > 0 && (
+          <p>Pending Requests to Join this league:</p>
+        )}
+        {isModerator &&
+          leagueInfo.requests.map((request: IUser) => {
+            return (
+              <div key={request._id} className="flex gap-5">
+                <p>{request.username}</p>
+                <HandleRequest userId={request._id.toString()} leagueId={params.leagueId} acceptUserToLeague={acceptUserToLeague} />
+              </div>
+            );
+          })}
         {isModerator && (
           <DeleteLeague
             leagueId={params.leagueId}

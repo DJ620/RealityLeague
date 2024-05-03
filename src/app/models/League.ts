@@ -6,6 +6,7 @@ export interface ILeague extends Document {
   rules: IRule[];
   moderators: IUser[];
   participants: IUser[];
+  requests: IUser[];
 }
 
 const leagueSchema: Schema = new mongoose.Schema({
@@ -37,6 +38,12 @@ const leagueSchema: Schema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  requests: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ]
 });
 
 const League =

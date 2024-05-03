@@ -15,6 +15,7 @@ export async function getLeagueInfo(leagueId: ObjectId) {
     .populate("rules")
     .populate("players")
     .populate("participants")
+    .populate("requests");
   return league;
 }
 
@@ -38,4 +39,41 @@ export async function deleteLeague(leagueId: ObjectId) {
   await dbConnect();
   const deleted = await League.deleteOne({ _id: leagueId });
   return deleted;
+}
+
+export async function requestToJoinLeague(
+  userId: string | undefined,
+  leagueId: ObjectId
+) {
+  "use server";
+  await dbConnect();
+  const user = await User.findOneAndUpdate(
+    { userId: userId },
+    { $push: { pendingLeagues: leagueId } }
+  );
+  const league = await League.findOneAndUpdate(
+    { _id: leagueId },
+    { $push: { requests: user._id } }
+  );
+  return league;
+}
+
+export async function acceptUserToLeague(userId: ObjectId, leagueId: ObjectId) {
+  "use server";
+  await dbConnect();
+  await User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $pull: { pendingLeagues: leagueId },
+      $push: { leagues: leagueId },
+    }
+  );
+  const league = await League.findOneAndUpdate(
+    { _id: leagueId },
+    {
+      $pull: { requests: userId },
+      $push: { participants: userId },
+    }
+  );
+  return league;
 }

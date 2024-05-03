@@ -5,6 +5,7 @@ export interface IUser extends Document {
   username: string;
   leagues: ILeague[];
   leaguesModerating: ILeague[];
+  pendingLeagues: ILeague[];
 }
 
 const userSchema: Schema = new mongoose.Schema({
@@ -23,6 +24,12 @@ const userSchema: Schema = new mongoose.Schema({
     },
   ],
   leaguesModerating: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "League",
+    },
+  ],
+  pendingLeagues: [
     {
       type: Schema.Types.ObjectId,
       ref: "League",
