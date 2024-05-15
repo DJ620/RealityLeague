@@ -2,14 +2,13 @@ import { ILeague } from "../models/League";
 import Link from "next/link";
 
 type props = {
-  leaguesModerating: ILeague[];
+  leagues: ILeague[];
 };
 
-export default function Moderated({ leaguesModerating }: props) {
+export default function Leagues({ leagues }: props) {
   return (
     <>
-      <p>Leagues You Are Moderating</p>
-      {leaguesModerating.map((league) => {
+      {leagues.map((league) => {
         return (
           <div key={league._id}>
             <Link href={`/league-info/${league._id}`}>{league.name}</Link>

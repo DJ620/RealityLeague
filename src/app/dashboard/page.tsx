@@ -4,7 +4,7 @@ import User from "../models/User";
 import League, { ILeague } from "../models/League";
 import Loader from "@/components/Loader";
 import Link from "next/link";
-import Moderated from "./Moderated";
+import Leagues from "./Leagues";
 
 async function checkUser() {
   const user = await currentUser();
@@ -37,16 +37,11 @@ export default async function DashboardPage() {
         <p>Welcome, {userInfo.username}</p>
         <Link href={`/add-league/${userInfo._id}`}>Create New League</Link>
       </div>
-      <Moderated leaguesModerating={userInfo.leaguesModerating} />
+      <p>Leagues you are moderating:</p>
+      <Leagues leagues={userInfo.leaguesModerating} />
       <div>
         <p>Participating in:</p>
-        {userInfo.leagues.map((league: ILeague) => {
-          return (
-            <div key={league._id}>
-              <p>{league.name}</p>
-            </div>
-          );
-        })}
+        <Leagues leagues={userInfo.leagues} />
       </div>
     </>
   );
