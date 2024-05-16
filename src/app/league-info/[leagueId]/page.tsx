@@ -9,7 +9,7 @@ import {
   getLeagueInfo,
   deleteLeague,
   requestToJoinLeague,
-  acceptUserToLeague
+  acceptUserToLeague,
 } from "@/app/api/leagues/actions";
 import { currentUser } from "@clerk/nextjs";
 import RequestToJoin from "./RequestToJoin";
@@ -39,19 +39,26 @@ export default async function LeagueInfo({
       <Loader loading={loading} />
       <div>
         <p className="text-center text-4xl mb-5">{leagueInfo.name}</p>
-        <p>Moderator(s):</p>
-        {leagueInfo.moderators.map((moderator: IUser) => {
-          return <p key={moderator._id}>{moderator.username}</p>;
-        })}
-        {leagueInfo.participants.length > 0 && <p>Participants:</p>}
-        {leagueInfo.participants.map((participant: IUser) => {
-          return (
-            <div key={participant._id}>
-              <p>{participant.username}</p>
-            </div>
-          );
-        })}
-        <div>
+
+        <div className="mb-5">
+          <p>Moderator(s):</p>
+          {leagueInfo.moderators.map((moderator: IUser) => {
+            return <p key={moderator._id}>{moderator.username}</p>;
+          })}
+        </div>
+
+        <div className="mb-5">
+          {leagueInfo.participants.length > 0 && <p>Participants:</p>}
+          {leagueInfo.participants.map((participant: IUser) => {
+            return (
+              <div key={participant._id}>
+                <p>{participant.username}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mb-5">
           {leagueInfo.rules.length > 0 && <p>Rules:</p>}
           {leagueInfo.rules.map((rule: IRule) => {
             return (
@@ -65,7 +72,8 @@ export default async function LeagueInfo({
             <Link href={`/edit-rules/${params.leagueId}`}>Edit Rules</Link>
           )}
         </div>
-        <div>
+
+        <div className="mb-5">
           {leagueInfo.players.length > 0 && <p>Players:</p>}
           {leagueInfo.players.map((player: IPlayer) => {
             return (
@@ -78,6 +86,7 @@ export default async function LeagueInfo({
             <Link href={`/edit-players/${params.leagueId}`}>Edit Players</Link>
           )}
         </div>
+        
         {isMember ? (
           <button>Leave this league</button>
         ) : isPending ? (
@@ -98,7 +107,11 @@ export default async function LeagueInfo({
             return (
               <div key={request._id} className="flex gap-5">
                 <p>{request.username}</p>
-                <HandleRequest userId={request._id.toString()} leagueId={params.leagueId} acceptUserToLeague={acceptUserToLeague} />
+                <HandleRequest
+                  userId={request._id.toString()}
+                  leagueId={params.leagueId}
+                  acceptUserToLeague={acceptUserToLeague}
+                />
               </div>
             );
           })}

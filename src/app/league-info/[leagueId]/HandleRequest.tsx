@@ -28,7 +28,7 @@ export default function HandleRequest({
   return (
     <div className="flex gap-5">
       <button onClick={handleAccept}>Accept</button>
-      <button>Deny</button>
+      {/* <button>Deny</button> */}
     </div>
   );
 }
