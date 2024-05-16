@@ -47,48 +47,62 @@ export default async function LeagueInfo({
           })}
         </div>
 
-        <div className="mb-5">
-          {leagueInfo.participants.length > 0 && <p>Participants:</p>}
-          {leagueInfo.participants.map((participant: IUser) => {
-            return (
-              <div key={participant._id}>
-                <p>{participant.username}</p>
-              </div>
-            );
-          })}
+        <div>
+          <div className="mb-5">
+            {leagueInfo.participants.length > 0 && <p>Participants:</p>}
+            {leagueInfo.participants.map((participant: IUser) => {
+              return (
+                <div key={participant._id}>
+                  <p>{participant.username}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mb-5">
+            {leagueInfo.rules.length > 0 && <p>Rules:</p>}
+            {leagueInfo.rules.map((rule: IRule) => {
+              return (
+                <div key={rule._id} className="flex gap-4">
+                  <p className="text-blue-500 font-extrabold">
+                    Rule: {rule.rule} <span className="text-white ml-3">|</span>
+                  </p>
+                  <p className="text-yellow-400">Point value: {rule.value}</p>
+                </div>
+              );
+            })}
+            {isModerator && (
+              <Link
+                href={`/edit-rules/${params.leagueId}`}
+                className="text-red-400"
+              >
+                Edit Rules
+              </Link>
+            )}
+          </div>
+
+          <div className="mb-5">
+            {leagueInfo.players.length > 0 && <p>Players:</p>}
+            {leagueInfo.players.map((player: IPlayer) => {
+              return (
+                <div key={player._id}>
+                  <p>{player.name}</p>
+                </div>
+              );
+            })}
+            {isModerator && (
+              <Link
+                href={`/edit-players/${params.leagueId}`}
+                className="text-red-400"
+              >
+                Edit Players
+              </Link>
+            )}
+          </div>
         </div>
 
-        <div className="mb-5">
-          {leagueInfo.rules.length > 0 && <p>Rules:</p>}
-          {leagueInfo.rules.map((rule: IRule) => {
-            return (
-              <div key={rule._id}>
-                <p>Rule: {rule.rule}</p>
-                <p>Point value: {rule.value}</p>
-              </div>
-            );
-          })}
-          {isModerator && (
-            <Link href={`/edit-rules/${params.leagueId}`}>Edit Rules</Link>
-          )}
-        </div>
-
-        <div className="mb-5">
-          {leagueInfo.players.length > 0 && <p>Players:</p>}
-          {leagueInfo.players.map((player: IPlayer) => {
-            return (
-              <div key={player._id}>
-                <p>{player.name}</p>
-              </div>
-            );
-          })}
-          {isModerator && (
-            <Link href={`/edit-players/${params.leagueId}`}>Edit Players</Link>
-          )}
-        </div>
-        
         {isMember ? (
-          <button>Leave this league</button>
+          <button className="text-red-500">Leave this league</button>
         ) : isPending ? (
           <p>Pending acceptance</p>
         ) : (
