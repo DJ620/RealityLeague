@@ -47,7 +47,7 @@ export default async function LeagueInfo({
           })}
         </div>
 
-        <div className="bg-slate-700 rounded-sm p-2 mb-5">
+        <div className="bg-slate-700 rounded-sm p-2 mb-5  outline-blue-500 outline border border-yellow-400">
           <div className="mb-5 border-b pb-5 border-b-black">
             {leagueInfo.participants.length > 0 && <p className="text-xl">Participants:</p>}
             {leagueInfo.participants.map((participant: IUser) => {
