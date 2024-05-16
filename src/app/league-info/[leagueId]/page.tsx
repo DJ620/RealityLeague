@@ -47,9 +47,9 @@ export default async function LeagueInfo({
           })}
         </div>
 
-        <div>
-          <div className="mb-5">
-            {leagueInfo.participants.length > 0 && <p>Participants:</p>}
+        <div className="bg-slate-700 rounded-sm p-2 mb-5">
+          <div className="mb-5 border-b pb-5 border-b-black">
+            {leagueInfo.participants.length > 0 && <p className="text-xl">Participants:</p>}
             {leagueInfo.participants.map((participant: IUser) => {
               return (
                 <div key={participant._id}>
@@ -59,8 +59,8 @@ export default async function LeagueInfo({
             })}
           </div>
 
-          <div className="mb-5">
-            {leagueInfo.rules.length > 0 && <p>Rules:</p>}
+          <div className="mb-5 border-b pb-5 border-b-black">
+            {leagueInfo.rules.length > 0 && <p className="text-xl">Rules:</p>}
             {leagueInfo.rules.map((rule: IRule) => {
               return (
                 <div key={rule._id} className="flex gap-4">
@@ -81,8 +81,8 @@ export default async function LeagueInfo({
             )}
           </div>
 
-          <div className="mb-5">
-            {leagueInfo.players.length > 0 && <p>Players:</p>}
+          <div>
+            {leagueInfo.players.length > 0 && <p className="text-xl">Players:</p>}
             {leagueInfo.players.map((player: IPlayer) => {
               return (
                 <div key={player._id}>
