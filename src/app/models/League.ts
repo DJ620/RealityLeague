@@ -43,7 +43,11 @@ const leagueSchema: Schema = new mongoose.Schema({
       type: Schema.Types.ObjectId,
       ref: "User"
     }
-  ]
+  ],
+  isPublic: {
+    type: Boolean,
+    default: true
+  }
 });
 
 const League =

@@ -24,12 +24,11 @@ export async function addLeague(league: string, userId: ObjectId) {
   await dbConnect();
   const newLeague = await League.create({
     name: league,
-    moderators: [userId],
-    participants: [userId],
+    moderators: [userId]
   });
   await User.findOneAndUpdate(
     { _id: userId },
-    { $push: { leaguesModerating: newLeague._id, leagues: newLeague._id } }
+    { $push: { leaguesModerating: newLeague._id } }
   );
   return newLeague._id.toString();
 }

@@ -48,8 +48,10 @@ export default async function LeagueInfo({
         </div>
 
         <div className="bg-slate-700 rounded-sm p-2 mb-5  outline-blue-500 outline border border-yellow-400">
-          <div className="mb-5 border-b pb-5 border-b-black">
-            {leagueInfo.participants.length > 0 && <p className="text-xl">Participants:</p>}
+          <div className="mb-5 border-b-2 pb-5 border-b-yellow-400">
+            {leagueInfo.participants.length > 0 && (
+              <p className="text-xl">Participants:</p>
+            )}
             {leagueInfo.participants.map((participant: IUser) => {
               return (
                 <div key={participant._id}>
@@ -59,44 +61,50 @@ export default async function LeagueInfo({
             })}
           </div>
 
-          <div className="mb-5 border-b pb-5 border-b-black">
-            {leagueInfo.rules.length > 0 && <p className="text-xl">Rules:</p>}
-            {leagueInfo.rules.map((rule: IRule) => {
-              return (
-                <div key={rule._id} className="flex gap-4">
-                  <p className="text-blue-500 font-extrabold">
-                    Rule: {rule.rule} <span className="text-white ml-3">|</span>
-                  </p>
-                  <p className="text-yellow-400">Point value: {rule.value}</p>
-                </div>
-              );
-            })}
-            {isModerator && (
-              <Link
-                href={`/edit-rules/${params.leagueId}`}
-                className="text-red-400"
-              >
-                Edit Rules
-              </Link>
+          <div className="mb-5 border-b-2 pb-5 border-b-yellow-400">
+            {leagueInfo.players.length > 0 && (
+              <p className="text-xl mb-1">Players:</p>
             )}
-          </div>
-
-          <div>
-            {leagueInfo.players.length > 0 && <p className="text-xl">Players:</p>}
             {leagueInfo.players.map((player: IPlayer) => {
               return (
-                <div key={player._id}>
+                <div key={player._id} className="py-1 border-t border-blue-700">
                   <p>{player.name}</p>
                 </div>
               );
             })}
             {isModerator && (
+              <div className="border-t border-blue-700 pt-4">
               <Link
                 href={`/edit-players/${params.leagueId}`}
                 className="text-red-400"
               >
                 Edit Players
               </Link>
+              </div>
+            )}
+          </div>
+
+          <div>
+            {leagueInfo.rules.length > 0 && <p className="text-xl">Rules:</p>}
+            {leagueInfo.rules.map((rule: IRule) => {
+              return (
+                <div key={rule._id} className="flex border-t px-5 py-2">
+                  <p className="text-blue-500 font-extrabold w-[90%]">
+                    {rule.rule}
+                  </p>
+                  <p className="text-yellow-400">Point value: {rule.value}</p>
+                </div>
+              );
+            })}
+            {isModerator && (
+              <div className="border-t pt-4">
+                <Link
+                  href={`/edit-rules/${params.leagueId}`}
+                  className="text-red-400"
+                >
+                  Edit Rules
+                </Link>
+              </div>
             )}
           </div>
         </div>
