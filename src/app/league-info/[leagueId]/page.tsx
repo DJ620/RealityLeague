@@ -10,10 +10,14 @@ import {
   deleteLeague,
   requestToJoinLeague,
   acceptUserToLeague,
+  leaveLeague,
+  joinLeague,
 } from "@/app/api/leagues/actions";
 import { currentUser } from "@clerk/nextjs";
 import RequestToJoin from "./RequestToJoin";
 import HandleRequest from "./HandleRequest";
+import LeaveLeague from "./LeaveLeague";
+import JoinLeague from "./JoinLeague";
 
 export default async function LeagueInfo({
   params,
@@ -74,12 +78,12 @@ export default async function LeagueInfo({
             })}
             {isModerator && (
               <div className="border-t border-blue-700 pt-4">
-              <Link
-                href={`/edit-players/${params.leagueId}`}
-                className="text-red-400"
-              >
-                Edit Players
-              </Link>
+                <Link
+                  href={`/edit-players/${params.leagueId}`}
+                  className="text-red-400"
+                >
+                  Edit Players
+                </Link>
               </div>
             )}
           </div>
@@ -110,9 +114,21 @@ export default async function LeagueInfo({
         </div>
 
         {isMember ? (
-          <button className="text-red-500">Leave this league</button>
+          <LeaveLeague
+            userId={user?.id}
+            leagueId={params.leagueId}
+            leagueName={leagueInfo.name}
+            leaveLeague={leaveLeague}
+          />
         ) : isPending ? (
           <p>Pending acceptance</p>
+        ) : leagueInfo.isPublic ? (
+          <JoinLeague
+            userId={user?.id}
+            leagueId={params.leagueId}
+            leagueName={leagueInfo.name}
+            joinLeague={joinLeague}
+          />
         ) : (
           <RequestToJoin
             userId={user?.id}

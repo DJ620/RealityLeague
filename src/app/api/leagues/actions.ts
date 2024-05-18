@@ -4,6 +4,7 @@ import User from "@/app/models/User";
 import Rule from "@/app/models/Rule";
 import Player from "@/app/models/Player";
 import { ObjectId } from "mongoose";
+import LeagueSelections from "@/app/models/LeagueSelections";
 
 export async function getLeagueInfo(leagueId: ObjectId) {
   "use server";
@@ -24,7 +25,7 @@ export async function addLeague(league: string, userId: ObjectId) {
   await dbConnect();
   const newLeague = await League.create({
     name: league,
-    moderators: [userId]
+    moderators: [userId],
   });
   await User.findOneAndUpdate(
     { _id: userId },
@@ -39,6 +40,29 @@ export async function deleteLeague(leagueId: ObjectId) {
   const deleted = await League.deleteOne({ _id: leagueId });
   return deleted;
 }
+
+export async function joinLeague(
+  userId: string | undefined,
+  leagueId: ObjectId
+) {
+  "use server";
+  await dbConnect();
+  const user = await User.findOne({userId});
+  const leagueSelections = await LeagueSelections.create({
+    user: user._id,
+    league: leagueId,
+    players: []
+  });
+  await User.findOneAndUpdate(
+    {_id: user._id},
+    {$push: {leagues: leagueSelections._id}}
+  );
+  const league = await League.findOneAndUpdate(
+    {_id: leagueId},
+    {$push: { participants: user._id}}
+  );
+  return league;
+};
 
 export async function requestToJoinLeague(
   userId: string | undefined,
@@ -73,6 +97,27 @@ export async function acceptUserToLeague(userId: ObjectId, leagueId: ObjectId) {
       $pull: { requests: userId },
       $push: { participants: userId },
     }
+  );
+  return league;
+}
+
+export async function leaveLeague(
+  userId: string | undefined,
+  leagueId: ObjectId
+) {
+  "use server";
+  await dbConnect();
+  const leagueSelectionsId = await LeagueSelections.findOne({
+    user: userId,
+    league: leagueId,
+  });
+  await User.findOneAndUpdate(
+    { userId },
+    { $pull: { leagues: leagueSelectionsId } }
+  );
+  const league = await League.findOneAndUpdate(
+    { _id: leagueId },
+    { $pull: { participants: userId } }
   );
   return league;
 }

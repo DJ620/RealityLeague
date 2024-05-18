@@ -7,26 +7,28 @@ type props = {
   userId: string | undefined;
   leagueId: ObjectId;
   leagueName: string;
-  requestToJoinLeague: (
+  leaveLeague: (
     userId: string | undefined,
     leagueId: ObjectId
   ) => Promise<ILeague>;
 };
 
-export default function RequestToJoin({
+export default function LeaveLeague({
   userId,
   leagueId,
   leagueName,
-  requestToJoinLeague,
+  leaveLeague,
 }: props) {
   const router = useRouter();
 
-  const handleRequestToJoin = async () => {
-    await requestToJoinLeague(userId, leagueId);
-    router.refresh();
+  const handleLeaveLeague = async () => {
+    await leaveLeague(userId, leagueId);
+    router.push("/dashboard");
   };
 
   return (
-    <button onClick={handleRequestToJoin}>Request to join {leagueName}</button>
+    <button onClick={handleLeaveLeague} className="text-red-500">
+      Leave {leagueName}
+    </button>
   );
 }
