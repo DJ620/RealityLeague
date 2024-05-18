@@ -44,9 +44,9 @@ const leagueSchema: Schema = new mongoose.Schema({
       ref: "User"
     }
   ],
-  isPublic: {
+  isPrivate: {
     type: Boolean,
-    default: true
+    default: false
   }
 });
 

@@ -122,19 +122,19 @@ export default async function LeagueInfo({
           />
         ) : isPending ? (
           <p>Pending acceptance</p>
-        ) : leagueInfo.isPublic ? (
-          <JoinLeague
-            userId={user?.id}
-            leagueId={params.leagueId}
-            leagueName={leagueInfo.name}
-            joinLeague={joinLeague}
-          />
-        ) : (
+        ) : leagueInfo.isPrivate ? (
           <RequestToJoin
             userId={user?.id}
             leagueId={params.leagueId}
             leagueName={leagueInfo.name}
             requestToJoinLeague={requestToJoinLeague}
+          />
+        ) : (
+          <JoinLeague
+            userId={user?.id}
+            leagueId={params.leagueId}
+            leagueName={leagueInfo.name}
+            joinLeague={joinLeague}
           />
         )}
         {isModerator && leagueInfo.requests.length > 0 && (
