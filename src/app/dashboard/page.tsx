@@ -5,14 +5,22 @@ import League, { ILeague } from "../models/League";
 import Loader from "@/components/Loader";
 import Link from "next/link";
 import Leagues from "./Leagues";
+import LeagueSelections from "../models/LeagueSelections";
+import ModeratingLeagues from "./ModeratingLeagues";
 
 async function checkUser() {
   const user = await currentUser();
   await dbConnect();
   await League.find({});
+  await LeagueSelections.find({});
   let registered = await User.findOne({ userId: user?.id })
     .populate("leaguesModerating")
-    .populate("leagues");
+    .populate({
+      path: "leagues",
+      populate: {
+        path: "league"
+      }
+    });
   if (registered === null) {
     registered = await User.create({
       userId: user?.id,
@@ -37,12 +45,20 @@ export default async function DashboardPage() {
         <p>Welcome, {userInfo.username}</p>
         <Link href={`/add-league/${userInfo._id}`}>Create New League</Link>
       </div>
-      <p>Leagues you are moderating:</p>
-      <Leagues leagues={userInfo.leaguesModerating} />
-      <div>
-        <p>Participating in:</p>
-        <Leagues leagues={userInfo.leagues} />
-      </div>
+
+      {userInfo.leaguesModerating.length > 0 && (
+        <div>
+          <p>Leagues you are moderating:</p>
+          <ModeratingLeagues leagues={userInfo.leaguesModerating} />
+        </div>
+      )}
+
+      {userInfo.leagues.length > 0 && (
+        <div>
+          <p>Participating in:</p>
+          <Leagues leagues={userInfo.leagues} />
+        </div>
+      )}
     </>
   );
 }

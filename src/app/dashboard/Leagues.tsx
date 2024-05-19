@@ -1,17 +1,20 @@
-import { ILeague } from "../models/League";
 import Link from "next/link";
+import { ILeagueSelections } from "../models/LeagueSelections";
 
 type props = {
-  leagues: ILeague[];
+  leagues: ILeagueSelections[];
 };
 
 export default function Leagues({ leagues }: props) {
+  console.log(leagues);
   return (
     <>
       {leagues.map((league) => {
         return (
           <div key={league._id}>
-            <Link href={`/league-info/${league._id}`}>{league.name}</Link>
+            <Link href={`/league-info/${league.league._id}`}>
+              {league.league.name}
+            </Link>
           </div>
         );
       })}

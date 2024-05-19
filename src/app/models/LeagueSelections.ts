@@ -12,10 +12,12 @@ const leagueSelectionsSchema: Schema = new mongoose.Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true
   },
   league: {
     type: Schema.Types.ObjectId,
     ref: "League",
+    required: true
   },
   plyers: [
     {
@@ -26,7 +28,7 @@ const leagueSelectionsSchema: Schema = new mongoose.Schema({
 });
 
 const LeagueSelections =
-  mongoose.models.User ||
+  mongoose.models.LeagueSelections ||
   mongoose.model<ILeagueSelections>("LeagueSelections", leagueSelectionsSchema);
 
 export default LeagueSelections;

@@ -47,22 +47,26 @@ export async function joinLeague(
 ) {
   "use server";
   await dbConnect();
-  const user = await User.findOne({userId});
+  console.log({ userId });
+  const user = await User.findOne({ userId: userId });
+  console.log({ user });
   const leagueSelections = await LeagueSelections.create({
     user: user._id,
     league: leagueId,
-    players: []
+    players: [],
   });
+  console.log({ leagueSelections });
   await User.findOneAndUpdate(
-    {_id: user._id},
-    {$push: {leagues: leagueSelections._id}}
+    { userId },
+    { $push: { leagues: leagueSelections._id } }
   );
   const league = await League.findOneAndUpdate(
-    {_id: leagueId},
-    {$push: { participants: user._id}}
+    { _id: leagueId },
+    { $push: { participants: user._id } }
   );
+  console.log("finished");
   return league;
-};
+}
 
 export async function requestToJoinLeague(
   userId: string | undefined,
@@ -107,17 +111,18 @@ export async function leaveLeague(
 ) {
   "use server";
   await dbConnect();
-  const leagueSelectionsId = await LeagueSelections.findOne({
-    user: userId,
+  const user = await User.findOne({ userId });
+  const leagueSelections = await LeagueSelections.findOne({
+    user: user._id,
     league: leagueId,
   });
   await User.findOneAndUpdate(
     { userId },
-    { $pull: { leagues: leagueSelectionsId } }
+    { $pull: { leagues: leagueSelections._id } }
   );
   const league = await League.findOneAndUpdate(
     { _id: leagueId },
-    { $pull: { participants: userId } }
+    { $pull: { participants: user._id } }
   );
   return league;
 }
