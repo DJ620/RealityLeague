@@ -1,12 +1,16 @@
 import mongoose, { Document, Schema } from "mongoose";
 import { IRule } from "./Rule";
 import { IUser } from "./User";
+import { IPlayer } from "./Player";
 export interface ILeague extends Document {
   name: string;
   rules: IRule[];
+  players: IPlayer[];
+  numberOfSelections: number;
   moderators: IUser[];
   participants: IUser[];
   requests: IUser[];
+  isPrivate: boolean;
 }
 
 const leagueSchema: Schema = new mongoose.Schema({
@@ -23,9 +27,13 @@ const leagueSchema: Schema = new mongoose.Schema({
   players: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Player"
-    }
+      ref: "Player",
+    },
   ],
+  numberOfSelections: {
+    type: Number,
+    required: true,
+  },
   moderators: [
     {
       type: Schema.Types.ObjectId,
@@ -41,13 +49,13 @@ const leagueSchema: Schema = new mongoose.Schema({
   requests: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User"
-    }
+      ref: "User",
+    },
   ],
   isPrivate: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const League =

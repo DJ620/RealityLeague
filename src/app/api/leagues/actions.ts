@@ -20,11 +20,12 @@ export async function getLeagueInfo(leagueId: ObjectId) {
   return league;
 }
 
-export async function addLeague(league: string, userId: ObjectId) {
+export async function addLeague(league: string, numberOfSelections: number, userId: ObjectId) {
   "use server";
   await dbConnect();
   const newLeague = await League.create({
     name: league,
+    numberOfSelections,
     moderators: [userId],
   });
   await User.findOneAndUpdate(
