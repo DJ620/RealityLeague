@@ -24,7 +24,7 @@ export default function PlayerForm({addPlayer, leagueId}: props) {
     return (
         <form onSubmit={handleAddPlayer}>
             <div className="mb-3">
-                <label>Player name:</label>
+                <label className="mr-2">Player name:</label>
                 <input 
                     type="text"
                     name="player"
