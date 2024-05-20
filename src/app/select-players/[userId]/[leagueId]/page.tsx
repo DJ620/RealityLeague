@@ -3,6 +3,7 @@ import { IPlayer } from "@/app/models/Player";
 import Loader from "@/components/Loader";
 import { ObjectId } from "mongoose";
 import React from "react";
+import PlayerSelection from "./PlayerSelection";
 
 export default async function SelectPlayers({
   params,
@@ -11,22 +12,16 @@ export default async function SelectPlayers({
 }) {
   let loading = true;
   const leagueInfo = await getLeagueInfo(params.leagueId);
-  console.log(leagueInfo.players);
+  const players = leagueInfo.players.map((player: IPlayer) => {
+    return { _id: player._id.toString(), name: player.name };
+  });
   loading = false;
   return (
     <>
       <Loader loading={loading} />
       <div>
-        <h1 className="text-4xl">Select players for {leagueInfo.name}</h1>
-        <select name="players" id="player-select" className="text-black p-1 w-52">
-          {leagueInfo.players.map((player: IPlayer) => {
-            return (
-              <option key={player._id} value={player.name}>
-                {player.name}
-              </option>
-            );
-          })}
-        </select>
+        <h1 className="text-4xl mb-5">Select players for {leagueInfo.name}</h1>
+        <PlayerSelection players={players} numberOfSelections={leagueInfo.numberOfSelections} />
       </div>
     </>
   );
