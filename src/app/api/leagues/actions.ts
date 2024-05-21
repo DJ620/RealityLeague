@@ -44,7 +44,8 @@ export async function deleteLeague(leagueId: ObjectId) {
 
 export async function joinLeague(
   userId: string | undefined,
-  leagueId: ObjectId
+  leagueId: ObjectId,
+  players: ObjectId[]
 ) {
   "use server";
   await dbConnect();
@@ -54,7 +55,7 @@ export async function joinLeague(
   const leagueSelections = await LeagueSelections.create({
     user: user._id,
     league: leagueId,
-    players: [],
+    players,
   });
   console.log({ leagueSelections });
   await User.findOneAndUpdate(
