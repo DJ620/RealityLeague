@@ -19,7 +19,7 @@ const leagueSelectionsSchema: Schema = new mongoose.Schema({
     ref: "League",
     required: true
   },
-  plyers: [
+  players: [
     {
       type: Schema.Types.ObjectId,
       ref: "Player",

@@ -6,7 +6,6 @@ type props = {
 };
 
 export default function ModeratingLeagues({ leagues }: props) {
-  console.log(leagues)
   return (
     <>
       {leagues.map((league) => {

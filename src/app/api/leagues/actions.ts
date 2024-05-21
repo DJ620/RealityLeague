@@ -15,12 +15,24 @@ export async function getLeagueInfo(leagueId: ObjectId) {
     .populate("moderators")
     .populate("rules")
     .populate("players")
-    .populate("participants")
+    .populate({
+      path: "participants",
+      populate: {
+        path: "leagues",
+        populate: {
+          path: "players",
+        },
+      },
+    })
     .populate("requests");
   return league;
 }
 
-export async function addLeague(league: string, numberOfSelections: number, userId: ObjectId) {
+export async function addLeague(
+  league: string,
+  numberOfSelections: number,
+  userId: ObjectId
+) {
   "use server";
   await dbConnect();
   const newLeague = await League.create({

@@ -11,13 +11,13 @@ import {
   requestToJoinLeague,
   acceptUserToLeague,
   leaveLeague,
-  joinLeague,
 } from "@/app/api/leagues/actions";
 import { currentUser } from "@clerk/nextjs";
 import RequestToJoin from "./RequestToJoin";
 import HandleRequest from "./HandleRequest";
 import LeaveLeague from "./LeaveLeague";
-import JoinLeague from "./JoinLeague";
+import { ILeagueSelections } from "@/app/models/LeagueSelections";
+import UserStats from "./UserStats";
 
 export default async function LeagueInfo({
   params,
@@ -59,7 +59,7 @@ export default async function LeagueInfo({
             {leagueInfo.participants.map((participant: IUser) => {
               return (
                 <div key={participant._id}>
-                  <p>{participant.username}</p>
+                  <UserStats participant={participant} leagueId={leagueInfo._id.toString()} />
                 </div>
               );
             })}
