@@ -17,13 +17,14 @@ export default function UserStats({
     }
   )[0].players;
   return (
-    <>
-      <p>{participant.username}</p>
-      <div className="pl-5 border-y">
-        {leaguePlayers.map((player: IPlayer) => {
+    <div className="flex">
+      <p className="font-extrabold text-yellow-400">{participant.username}</p>
+      <div className="pl-10">
+        <p>{leaguePlayers.map((player: IPlayer) => player.name).join(" | ")}</p>
+        {/* {leaguePlayers.map((player: IPlayer) => {
           return <p key={player._id}>{player.name}</p>;
-        })}
+        })} */}
       </div>
-    </>
+    </div>
   );
 }

@@ -58,34 +58,17 @@ export default async function LeagueInfo({
             )}
             {leagueInfo.participants.map((participant: IUser) => {
               return (
-                <div key={participant._id}>
-                  <UserStats participant={participant} leagueId={leagueInfo._id.toString()} />
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mb-5 border-b-2 pb-5 border-b-yellow-400">
-            {leagueInfo.players.length > 0 && (
-              <p className="text-xl mb-1">Players:</p>
-            )}
-            {leagueInfo.players.map((player: IPlayer) => {
-              return (
-                <div key={player._id} className="py-1 border-t border-blue-700">
-                  <p>{player.name}</p>
-                </div>
-              );
-            })}
-            {isModerator && (
-              <div className="border-t border-blue-700 pt-4">
-                <Link
-                  href={`/edit-players/${params.leagueId}`}
-                  className="text-red-400"
+                <div
+                  key={participant._id}
+                  className="border-y py-2 border-blue-500"
                 >
-                  Edit Players
-                </Link>
-              </div>
-            )}
+                  <UserStats
+                    participant={participant}
+                    leagueId={leagueInfo._id.toString()}
+                  />
+                </div>
+              );
+            })}
           </div>
 
           <div>
@@ -111,6 +94,29 @@ export default async function LeagueInfo({
               </div>
             )}
           </div>
+        </div>
+
+        <div className="mb-5 border-b-2 pb-5 border-b-yellow-400">
+          {leagueInfo.players.length > 0 && (
+            <p className="text-xl mb-1">Players:</p>
+          )}
+          {leagueInfo.players.map((player: IPlayer) => {
+            return (
+              <div key={player._id} className="py-1 ">
+                <p>{player.name}</p>
+              </div>
+            );
+          })}
+          {isModerator && (
+            <div className="border-t border-blue-700 pt-4">
+              <Link
+                href={`/edit-players/${params.leagueId}`}
+                className="text-red-400"
+              >
+                Edit Players
+              </Link>
+            </div>
+          )}
         </div>
 
         {isMember ? (
