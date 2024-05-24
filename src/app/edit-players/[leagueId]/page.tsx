@@ -28,18 +28,22 @@ export default async function EditPlayers({
         </Link>
       </p>
       <PlayerForm addPlayer={addPlayer} leagueId={params.leagueId} />
-      {existingPlayers?.length > 0 && <p>Current Players</p>}
-      {existingPlayers.map((player: IPlayer) => {
-        return (
-          <div key={player._id}>
-            <p>{player.name}</p>
-            <DeletePlayer
-              playerId={player._id.toString()}
-              deletePlayer={deletePlayer}
-            />
-          </div>
-        );
-      })}
+      {existingPlayers?.length > 0 && (
+        <p className="mt-5 mb-5 text-2xl">Current Players</p>
+      )}
+      <div className="flex gap-8 flex-wrap">
+        {existingPlayers.map((player: IPlayer) => {
+          return (
+            <div key={player._id}>
+              <p>{player.name}</p>
+              <DeletePlayer
+                playerId={player._id.toString()}
+                deletePlayer={deletePlayer}
+              />
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 }

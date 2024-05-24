@@ -54,7 +54,11 @@ export default async function LeagueInfo({
         <div className="bg-slate-700 rounded-sm p-2 mb-5  outline-blue-500 outline border border-yellow-400">
           <div className="mb-5 border-b-2 pb-5 border-b-yellow-400">
             {leagueInfo.participants.length > 0 && (
-              <p className="text-xl">Participants:</p>
+              <div className="flex gap-60">
+                <p className="text-xl w-52">Participants:</p>
+                <p className="text-xl w-52">Players:</p>
+                <p className="text-xl w-52">Score:</p>
+              </div>
             )}
             {leagueInfo.participants.map((participant: IUser) => {
               return (
@@ -96,17 +100,18 @@ export default async function LeagueInfo({
           </div>
         </div>
 
-        <div className="mb-5 border-b-2 pb-5 border-b-yellow-400">
+        <div className="mb-5 pb-5 w-fit">
           {leagueInfo.players.length > 0 && (
             <p className="text-xl mb-1">Players:</p>
           )}
-          {leagueInfo.players.map((player: IPlayer) => {
+          <p className="pb-1">{leagueInfo.players.map((player: IPlayer) => player.name).join(" | ")}</p>
+          {/* {leagueInfo.players.map((player: IPlayer) => {
             return (
               <div key={player._id} className="py-1 ">
                 <p>{player.name}</p>
               </div>
             );
-          })}
+          })} */}
           {isModerator && (
             <div className="border-t border-blue-700 pt-4">
               <Link

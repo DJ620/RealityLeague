@@ -6,34 +6,41 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type props = {
-    addPlayer: (
-        player: string, leagueMongoId: ObjectId
-    ) => Promise<ILeague>;
-    leagueId: ObjectId;
+  addPlayer: (player: string, leagueMongoId: ObjectId) => Promise<ILeague>;
+  leagueId: ObjectId;
 };
 
-export default function PlayerForm({addPlayer, leagueId}: props) {
-    const router = useRouter();
-    const [player, setPlayer] = useState<string>("");
+export default function PlayerForm({ addPlayer, leagueId }: props) {
+  const router = useRouter();
+  const [player, setPlayer] = useState<string>("");
 
-    const handleAddPlayer = async () => {
-        await addPlayer(player, leagueId);
-        router.refresh();
-    };
+  const handleAddPlayer = async () => {
+    await addPlayer(player, leagueId);
+    router.refresh();
+  };
 
-    return (
-        <form onSubmit={handleAddPlayer}>
-            <div className="mb-3">
-                <label className="mr-2">Player name:</label>
-                <input 
-                    type="text"
-                    name="player"
-                    value={player}
-                    onChange={(e) => setPlayer(e.target.value)}
-                    className="text-black p-1"
-                />
-            </div>
-            <button type="submit">Add Player</button>
-        </form>
-    )
+  return (
+    <form onSubmit={handleAddPlayer}>
+      <div className="mb-3">
+        <label className="mr-2">Player name:</label>
+        <input
+          type="text"
+          name="player"
+          value={player}
+          onChange={(e) => setPlayer(e.target.value)}
+          className="text-black p-1"
+        />
+      </div>
+      <button
+        type="submit"
+        className={`font-extrabold p-3 rounded mt-2 ${
+          player === ""
+            ? "bg-slate-700 text-slate-400 pointer-events-none"
+            : "bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-yellow-400"
+        }`}
+      >
+        Add Player
+      </button>
+    </form>
+  );
 }
