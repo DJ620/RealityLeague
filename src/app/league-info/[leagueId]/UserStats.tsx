@@ -17,23 +17,31 @@ export default function UserStats({
     }
   )[0]?.players;
   return (
-    <div className="flex gap-60">
-      <p className="font-extrabold text-yellow-400 w-52">
+    <div className="flex">
+      <p className="font-extrabold text-yellow-400 w-36 mr-10 border-r">
         {participant.username}
       </p>
-      <div className="w-52">
+      <div className="w-64 mr-10 border-r">
         <div className="flex gap-3">
-          {leaguePlayers.map((player: IPlayer, index: number) => {
-            return (
-              <div key={player._id} className="flex gap-3">
-                <p className={`font-bold ${player.isActive ? "text-blue-500" : "text-red-500"}`}>{player.name}</p>
-                {index < leaguePlayers.length - 1 && <p>|</p>}
-              </div>
-            );
-          })}
+          {leaguePlayers
+            .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
+            .map((player: IPlayer, index: number) => {
+              return (
+                <div key={player._id} className="flex gap-3">
+                  <p
+                    className={`font-bold ${
+                      player.isActive ? "text-blue-500" : "text-red-500"
+                    }`}
+                  >
+                    {player.name}
+                  </p>
+                  {index < leaguePlayers.length - 1 && <p>|</p>}
+                </div>
+              );
+            })}
         </div>
       </div>
-      <p className="w-52">Score goes here</p>
+      <p className="">Score goes here</p>
     </div>
   );
 }

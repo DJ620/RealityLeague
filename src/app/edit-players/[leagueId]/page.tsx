@@ -6,7 +6,11 @@ import PlayerForm from "./PlayerForm";
 import DeletePlayer from "./DeletePlayer";
 import Link from "next/link";
 import { getLeagueInfo } from "@/app/api/leagues/actions";
-import { addPlayer, changePlayerStatus, deletePlayer } from "@/app/api/players/actions";
+import {
+  addPlayer,
+  changePlayerStatus,
+  deletePlayer,
+} from "@/app/api/players/actions";
 import PlayerInfo from "./PlayerInfo";
 
 export default async function EditPlayers({
@@ -33,18 +37,20 @@ export default async function EditPlayers({
         <p className="mt-5 mb-5 text-2xl">Current Players</p>
       )}
       <div className="flex gap-5 flex-wrap">
-        {existingPlayers.map((player: IPlayer) => {
-          return (
-            <PlayerInfo
-              key={player._id}
-              playerName={player.name}
-              playerId={player._id.toString()}
-              isActive={player.isActive}
-              changePlayerStatus={changePlayerStatus}
-              deletePlayer={deletePlayer}
-            />
-          );
-        })}
+        {existingPlayers
+          .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
+          .map((player: IPlayer) => {
+            return (
+              <PlayerInfo
+                key={player._id}
+                playerName={player.name}
+                playerId={player._id.toString()}
+                isActive={player.isActive}
+                changePlayerStatus={changePlayerStatus}
+                deletePlayer={deletePlayer}
+              />
+            );
+          })}
       </div>
     </>
   );

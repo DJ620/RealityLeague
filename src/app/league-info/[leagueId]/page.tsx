@@ -52,12 +52,12 @@ export default async function LeagueInfo({
         </div>
 
         <div className="bg-slate-800 rounded-sm p-2 mb-5  outline-blue-500 outline border border-yellow-400">
-          <div className="mb-5 border-b-2 pb-5 border-b-yellow-400">
+          <div className="mb-5 border-b-2 pb-3 border-b-yellow-400">
             {leagueInfo.participants.length > 0 && (
-              <div className="flex gap-60">
-                <p className="text-xl w-52">Participants:</p>
-                <p className="text-xl w-52">Players:</p>
-                <p className="text-xl w-52">Score:</p>
+              <div className="flex pb-2">
+                <p className="text-xl w-36 mr-10 border-r">Participants:</p>
+                <p className="text-xl w-64 mr-10 border-r">Players:</p>
+                <p className="text-xl">Score:</p>
               </div>
             )}
             {leagueInfo.participants.length > 0 &&
@@ -65,7 +65,7 @@ export default async function LeagueInfo({
                 return (
                   <div
                     key={participant._id}
-                    className="border-y py-2 border-blue-500"
+                    className="border-t pt-2 border-blue-500"
                   >
                     <UserStats
                       participant={participant}
@@ -106,20 +106,22 @@ export default async function LeagueInfo({
             <p className="text-xl mb-1">Players:</p>
           )}
           <div className="flex gap-3">
-            {leagueInfo.players.map((player: IPlayer, index: number) => {
-              return (
-                <div key={player._id} className="py-1 flex gap-3">
-                  <p
-                    className={`font-bold ${
-                      player.isActive ? "text-blue-500" : "text-red-500"
-                    }`}
-                  >
-                    {player.name}
-                  </p>
-                  {index < leagueInfo.players.length - 1 && <p>|</p>}
-                </div>
-              );
-            })}
+            {leagueInfo.players
+              .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
+              .map((player: IPlayer, index: number) => {
+                return (
+                  <div key={player._id} className="py-1 flex gap-3">
+                    <p
+                      className={`font-bold ${
+                        player.isActive ? "text-blue-500" : "text-red-500"
+                      }`}
+                    >
+                      {player.name}
+                    </p>
+                    {index < leagueInfo.players.length - 1 && <p>|</p>}
+                  </div>
+                );
+              })}
           </div>
           {isModerator && (
             <div className="pt-4">
