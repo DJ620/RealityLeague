@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 import { IRule } from "./Rule";
 import { IUser } from "./User";
 import { IPlayer } from "./Player";
+import { IEpisode } from "./Episode";
 export interface ILeague extends Document {
   name: string;
   rules: IRule[];
@@ -11,6 +12,7 @@ export interface ILeague extends Document {
   participants: IUser[];
   requests: IUser[];
   isPrivate: boolean;
+  episodes: IEpisode[];
 }
 
 const leagueSchema: Schema = new mongoose.Schema({
@@ -56,6 +58,12 @@ const leagueSchema: Schema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  episodes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Episode",
+    },
+  ]
 });
 
 const League =
