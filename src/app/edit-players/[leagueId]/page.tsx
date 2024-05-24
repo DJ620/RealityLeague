@@ -32,10 +32,15 @@ export default async function EditPlayers({
       {existingPlayers?.length > 0 && (
         <p className="mt-5 mb-5 text-2xl">Current Players</p>
       )}
-      <div className="flex gap-8 flex-wrap">
+      <div className="flex gap-5 flex-wrap">
         {existingPlayers.map((player: IPlayer) => {
           return (
-            <PlayerInfo player={player} deletePlayer={deletePlayer} />
+            <PlayerInfo
+              key={player._id}
+              playerName={player.name}
+              playerId={player._id.toString()}
+              deletePlayer={deletePlayer}
+            />
           );
         })}
       </div>
