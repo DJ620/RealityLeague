@@ -26,8 +26,8 @@ export default function RulesForm({ addRuleToDB, leagueId }: props) {
 
   return (
     <form onSubmit={handleAddRule}>
-      <div className="mb-3 flex justify-between w-[610px] items-center">
-        <label>Rule:</label>
+      <div className="mb-3 flex items-center">
+        <label className="w-20">Rule:</label>
         <input
           type="text"
           name="rule"
@@ -36,18 +36,27 @@ export default function RulesForm({ addRuleToDB, leagueId }: props) {
           className="text-black p-1 w-[500px]"
         />
       </div>
-      <div className="flex justify-between w-[610px] items-center">
-        <label>Point Value:</label>
+      <div className="flex items-center">
+        <label className="w-20">Points:</label>
         <input
           type="number"
           min={1}
           name="value"
           value={value}
           onChange={(e) => setValue(+e.target.value)}
-          className="text-black p-1"
+          className="text-black p-1 w-16"
         />
       </div>
-      <button type="submit">Add Rule</button>
+      <button
+        type="submit"
+        className={`font-extrabold p-3 rounded mt-5 ${
+          rule === "" || value < 1
+            ? "bg-slate-700 text-slate-400 pointer-events-none"
+            : "bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-yellow-400"
+        }`}
+      >
+        Add Rule
+      </button>
     </form>
   );
 }

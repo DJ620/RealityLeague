@@ -16,7 +16,6 @@ import { currentUser } from "@clerk/nextjs";
 import RequestToJoin from "./RequestToJoin";
 import HandleRequest from "./HandleRequest";
 import LeaveLeague from "./LeaveLeague";
-import { ILeagueSelections } from "@/app/models/LeagueSelections";
 import UserStats from "./UserStats";
 
 export default async function LeagueInfo({
@@ -91,7 +90,7 @@ export default async function LeagueInfo({
             {isModerator && (
               <div className="border-t pt-4">
                 <Link
-                  href={`/edit-rules/${params.leagueId.toString()}`}
+                  href={`/edit-rules/${params.leagueId}`}
                   className="text-red-400"
                 >
                   Edit Rules

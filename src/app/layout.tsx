@@ -25,10 +25,10 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className="min-h-screen relative">
-          <Nav />
-          <div className="p-10">
-            {children}
+          <div className="fixed top-0 w-full bg-black">
+            <Nav />
           </div>
+          <div className="p-10 mt-12">{children}</div>
         </body>
       </html>
     </ClerkProvider>

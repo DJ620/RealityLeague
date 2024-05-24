@@ -17,7 +17,7 @@ export default function DeleteRule({ ruleId, deleteRule }: props) {
   };
   return (
     <>
-      <button onClick={handleDeleteRule}>Remove Rule</button>
+      <button onClick={handleDeleteRule} className="text-sm p-1 bg-red-500 hover:bg-red-600 active:bg-red-700 rounded">Delete Rule</button>
     </>
   );
 }
