@@ -134,6 +134,7 @@ export async function leaveLeague(
     { userId },
     { $pull: { leagues: leagueSelections._id } }
   );
+  await LeagueSelections.findOneAndDelete({ _id: leagueSelections._id });
   const league = await League.findOneAndUpdate(
     { _id: leagueId },
     { $pull: { participants: user._id } }

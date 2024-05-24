@@ -24,6 +24,7 @@ export default function LeaveLeague({
   const handleLeaveLeague = async () => {
     await leaveLeague(userId, leagueId);
     router.push("/dashboard");
+    router.refresh();
   };
 
   return (

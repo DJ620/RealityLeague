@@ -18,8 +18,8 @@ async function checkUser() {
     .populate({
       path: "leagues",
       populate: {
-        path: "league"
-      }
+        path: "league",
+      },
     });
   if (registered === null) {
     registered = await User.create({

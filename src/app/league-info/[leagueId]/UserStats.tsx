@@ -22,7 +22,7 @@ export default function UserStats({
         {participant.username}
       </p>
       <div className="w-64 mr-10 border-r">
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {leaguePlayers
             .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
             .map((player: IPlayer, index: number) => {
