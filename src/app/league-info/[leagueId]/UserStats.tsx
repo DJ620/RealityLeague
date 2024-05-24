@@ -15,15 +15,23 @@ export default function UserStats({
     (league: ILeagueSelections) => {
       return league.league._id.toString() === leagueId;
     }
-  )[0].players;
+  )[0]?.players;
   return (
     <div className="flex gap-60">
-      <p className="font-extrabold text-yellow-400 w-52">{participant.username}</p>
+      <p className="font-extrabold text-yellow-400 w-52">
+        {participant.username}
+      </p>
       <div className="w-52">
-        <p>{leaguePlayers.map((player: IPlayer) => player.name).join(" | ")}</p>
-        {/* {leaguePlayers.map((player: IPlayer) => {
-          return <p key={player._id}>{player.name}</p>;
-        })} */}
+        <div className="flex gap-3">
+          {leaguePlayers.map((player: IPlayer, index: number) => {
+            return (
+              <div key={player._id} className="flex gap-3">
+                <p className={`font-bold ${player.isActive ? "text-blue-500" : "text-red-500"}`}>{player.name}</p>
+                {index < leaguePlayers.length - 1 && <p>|</p>}
+              </div>
+            );
+          })}
+        </div>
       </div>
       <p className="w-52">Score goes here</p>
     </div>

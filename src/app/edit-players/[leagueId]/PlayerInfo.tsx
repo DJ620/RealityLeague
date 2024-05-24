@@ -1,32 +1,37 @@
 "use client";
 import { ObjectId } from "mongoose";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import DeletePlayer from "./DeletePlayer";
+import { IPlayer } from "@/app/models/Player";
 
 export default function PlayerInfo({
   playerName,
   playerId,
+  isActive,
+  changePlayerStatus,
   deletePlayer,
 }: {
   playerName: string;
   playerId: ObjectId;
+  isActive: boolean;
+  changePlayerStatus: (
+    playerId: ObjectId,
+    isActive: boolean
+  ) => Promise<string>;
   deletePlayer: (playerId: ObjectId) => Promise<any>;
 }) {
-  const [isChecked, setIsChecked] = useState<boolean>(true);
+  const router = useRouter();
 
-  const handleChangePlayerStatus = () => {
-    if (isChecked) {
-      setIsChecked(false);
-    } else {
-      setIsChecked(true);
-    }
+  const handleChangePlayerStatus = async () => {
+    await changePlayerStatus(playerId, !isActive);
+    router.refresh();
   };
 
   return (
     <div className="border-blue-400 border p-2 flex-col justify-center flex bg-slate-900">
       <p
         className={`font-extrabold text-center ${
-          isChecked ? "text-yellow-400" : "text-red-500"
+          isActive ? "text-yellow-400" : "text-red-500"
         }`}
       >
         {playerName}
@@ -36,7 +41,7 @@ export default function PlayerInfo({
           Active
           <input
             type="checkbox"
-            checked={isChecked}
+            checked={isActive}
             onChange={handleChangePlayerStatus}
             className=" w-full h-full peer appearance-none rounded-md"
           />

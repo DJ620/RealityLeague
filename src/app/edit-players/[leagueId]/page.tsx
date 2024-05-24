@@ -6,7 +6,7 @@ import PlayerForm from "./PlayerForm";
 import DeletePlayer from "./DeletePlayer";
 import Link from "next/link";
 import { getLeagueInfo } from "@/app/api/leagues/actions";
-import { addPlayer, deletePlayer } from "@/app/api/players/actions";
+import { addPlayer, changePlayerStatus, deletePlayer } from "@/app/api/players/actions";
 import PlayerInfo from "./PlayerInfo";
 
 export default async function EditPlayers({
@@ -39,6 +39,8 @@ export default async function EditPlayers({
               key={player._id}
               playerName={player.name}
               playerId={player._id.toString()}
+              isActive={player.isActive}
+              changePlayerStatus={changePlayerStatus}
               deletePlayer={deletePlayer}
             />
           );

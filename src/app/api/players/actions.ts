@@ -20,3 +20,16 @@ export async function deletePlayer(playerId: ObjectId) {
   const deletedPlayer = await Player.deleteOne({ _id: playerId });
   return deletedPlayer;
 }
+
+export async function changePlayerStatus(
+  playerId: ObjectId,
+  isActive: boolean
+) {
+  "use server";
+  await dbConnect();
+  const updatedPlayer = await Player.findOneAndUpdate(
+    { _id: playerId },
+    { isActive }
+  );
+  return updatedPlayer.name;
+}
