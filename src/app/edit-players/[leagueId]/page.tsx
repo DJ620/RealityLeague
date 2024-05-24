@@ -23,20 +23,17 @@ export default async function EditPlayers({
 
   return (
     <>
-      <p className="text-4xl mb-5">
-        Add New Player for{" "}
-        <Link
-          href={`/league-info/${params.leagueId}`}
-          className="text-blue-500 hover:text-yellow-400"
-        >
-          {leagueInfo.name}
-        </Link>
-      </p>
-      <PlayerForm addPlayer={addPlayer} leagueId={params.leagueId} />
+      <Link
+        href={`/league-info/${params.leagueId}`}
+        className="text-blue-500 hover:text-yellow-400 text-4xl font-extrabold mb-5"
+      >
+        {leagueInfo.name}
+      </Link>
+
       {existingPlayers?.length > 0 && (
         <p className="mt-5 mb-5 text-2xl">Current Players</p>
       )}
-      <div className="flex gap-5 flex-wrap">
+      <div className="flex gap-5 flex-wrap mb-5 border-b border-b-yellow-400 pb-8">
         {existingPlayers
           .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
           .map((player: IPlayer) => {
@@ -51,6 +48,10 @@ export default async function EditPlayers({
               />
             );
           })}
+      </div>
+      <div>
+        <p className="text-2xl mb-5">Add New Player </p>
+        <PlayerForm addPlayer={addPlayer} leagueId={params.leagueId} />
       </div>
     </>
   );

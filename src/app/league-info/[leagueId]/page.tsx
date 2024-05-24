@@ -91,7 +91,7 @@ export default async function LeagueInfo({
             {isModerator && (
               <div className="border-t pt-4">
                 <Link
-                  href={`/edit-rules/${params.leagueId}`}
+                  href={`/edit-rules/${params.leagueId.toString()}`}
                   className="text-red-400"
                 >
                   Edit Rules
