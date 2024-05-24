@@ -7,6 +7,7 @@ import DeletePlayer from "./DeletePlayer";
 import Link from "next/link";
 import { getLeagueInfo } from "@/app/api/leagues/actions";
 import { addPlayer, deletePlayer } from "@/app/api/players/actions";
+import PlayerInfo from "./PlayerInfo";
 
 export default async function EditPlayers({
   params,
@@ -34,13 +35,7 @@ export default async function EditPlayers({
       <div className="flex gap-8 flex-wrap">
         {existingPlayers.map((player: IPlayer) => {
           return (
-            <div key={player._id}>
-              <p>{player.name}</p>
-              <DeletePlayer
-                playerId={player._id.toString()}
-                deletePlayer={deletePlayer}
-              />
-            </div>
+            <PlayerInfo player={player} deletePlayer={deletePlayer} />
           );
         })}
       </div>
