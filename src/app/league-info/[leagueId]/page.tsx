@@ -178,10 +178,13 @@ export default async function LeagueInfo({
             );
           })}
         {isModerator && (
-          <DeleteLeague
-            leagueId={params.leagueId}
-            deleteLeague={deleteLeague}
-          />
+          <div>
+            <Link href={`/edit-score/${leagueInfo._id}`}>Edit Score</Link>
+            <DeleteLeague
+              leagueId={params.leagueId}
+              deleteLeague={deleteLeague}
+            />
+          </div>
         )}
       </div>
     </>

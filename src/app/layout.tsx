@@ -24,7 +24,7 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
-        <body className="min-h-screen relative">
+        <body className="relative">
           <div className="fixed top-0 w-full bg-black">
             <Nav />
           </div>
