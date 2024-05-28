@@ -20,9 +20,9 @@ export default function PlayerForm({ addPlayer, leagueId }: props) {
   };
 
   return (
-    <form onSubmit={handleAddPlayer}>
-      <div className="mb-3">
-        <label className="mr-2">Player name:</label>
+    <form onSubmit={handleAddPlayer} className="flex items-center gap-10">
+      <div className="">
+        <label className="mr-4">Player name:</label>
         <input
           type="text"
           name="player"
@@ -33,7 +33,7 @@ export default function PlayerForm({ addPlayer, leagueId }: props) {
       </div>
       <button
         type="submit"
-        className={`font-extrabold p-3 rounded mt-2 ${
+        className={`font-extrabold p-3 rounded ${
           player === ""
             ? "bg-slate-700 text-slate-400 pointer-events-none"
             : "bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-yellow-400"

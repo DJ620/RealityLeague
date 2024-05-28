@@ -18,6 +18,10 @@ export default async function EditScore({
       >
         {leagueInfo.name}
       </Link>
+
+      <div>
+        <h2 className="text-2xl">Add New Episode</h2>
+      </div>
     </>
   );
 }
