@@ -51,7 +51,7 @@ export default async function LeagueInfo({
         </div>
 
         <div className="bg-slate-800 rounded-sm p-2 mb-5  outline-blue-500 outline border border-yellow-400">
-          <div className="mb-5 border-b-2 pb-3 border-b-yellow-400">
+          <div className="mb-5 border-b-2 pb-5 border-b-yellow-400">
             {leagueInfo.participants.length > 0 && (
               <div className="flex pb-2">
                 <p className="text-xl w-36 mr-10 border-r">Participants:</p>
@@ -76,7 +76,7 @@ export default async function LeagueInfo({
           </div>
 
           <div>
-            {leagueInfo.rules.length > 0 && <p className="text-xl">Rules:</p>}
+            {leagueInfo.rules.length > 0 && <p className="text-xl pb-2">Rules:</p>}
             {leagueInfo.rules.map((rule: IRule) => {
               return (
                 <div key={rule._id} className="flex border-t px-5 py-2">
