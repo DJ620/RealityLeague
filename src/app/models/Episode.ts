@@ -11,10 +11,12 @@ const episodeSchema: Schema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  score: {
-    type: Schema.Types.ObjectId,
-    ref: "Score",
-  },
+  score: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Score",
+    },
+  ]
 });
 
 const Episode =

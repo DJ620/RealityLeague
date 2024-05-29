@@ -7,12 +7,14 @@ import Link from "next/link";
 import Leagues from "./Leagues";
 import LeagueSelections from "../models/LeagueSelections";
 import ModeratingLeagues from "./ModeratingLeagues";
+import Score from "../models/Score";
 
 async function checkUser() {
   const user = await currentUser();
   await dbConnect();
   await League.find({});
   await LeagueSelections.find({});
+  await Score.find({});
   let registered = await User.findOne({ userId: user?.id })
     .populate("leaguesModerating")
     .populate({

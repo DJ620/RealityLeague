@@ -4,7 +4,6 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import StoreProvider from "./StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +23,6 @@ export default function RootLayout({
         baseTheme: dark,
       }}
     >
-      <StoreProvider>
         <html lang="en">
           <body className="relative">
             <div className="fixed top-0 w-full bg-black">
@@ -33,7 +31,6 @@ export default function RootLayout({
             <div className="p-10 mt-12">{children}</div>
           </body>
         </html>
-      </StoreProvider>
     </ClerkProvider>
   );
 }

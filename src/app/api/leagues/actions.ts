@@ -5,12 +5,14 @@ import Rule from "@/app/models/Rule";
 import Player from "@/app/models/Player";
 import { ObjectId } from "mongoose";
 import LeagueSelections from "@/app/models/LeagueSelections";
+import Episode from "@/app/models/Episode";
 
 export async function getLeagueInfo(leagueId: ObjectId) {
   "use server";
   await dbConnect();
   await Rule.find({});
   await Player.find({});
+  await Episode.find({});
   const league = await League.findOne({ _id: leagueId })
     .populate("moderators")
     .populate("rules")
@@ -24,7 +26,13 @@ export async function getLeagueInfo(leagueId: ObjectId) {
         },
       },
     })
-    .populate("requests");
+    .populate("requests")
+    .populate({
+      path: "episodes",
+      populate: {
+        path: "score",
+      },
+    });
   return league;
 }
 

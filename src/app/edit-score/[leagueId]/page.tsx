@@ -2,6 +2,9 @@ import { getLeagueInfo } from "@/app/api/leagues/actions";
 import { ObjectId } from "mongoose";
 import Link from "next/link";
 import React from "react";
+import NewEpisode from "./NewEpisode";
+import { addEpisode } from "@/app/api/episodes/actions";
+import { IEpisode } from "@/app/models/Episode";
 
 export default async function EditScore({
   params,
@@ -9,6 +12,7 @@ export default async function EditScore({
   params: { leagueId: ObjectId };
 }) {
   const leagueInfo = await getLeagueInfo(params.leagueId);
+  const numOfEpisodes = leagueInfo.episodes.length + 1;
 
   return (
     <>
@@ -19,8 +23,20 @@ export default async function EditScore({
         {leagueInfo.name}
       </Link>
 
+      <NewEpisode
+        leagueId={params.leagueId}
+        addEpisode={addEpisode}
+        number={numOfEpisodes}
+      />
+
       <div>
-        <h2 className="text-2xl">Add New Episode</h2>
+        {leagueInfo.episodes.map((episode: IEpisode) => {
+          return (
+            <div key={episode._id}>
+              <p>Episode number {episode.number}</p>
+            </div>
+          );
+        })}
       </div>
     </>
   );
