@@ -5,6 +5,7 @@ import React from "react";
 import NewEpisode from "./NewEpisode";
 import { addEpisode } from "@/app/api/episodes/actions";
 import { IEpisode } from "@/app/models/Episode";
+import Modal from "@/components/Modal";
 
 export default async function EditScore({
   params,
