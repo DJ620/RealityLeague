@@ -9,6 +9,7 @@ import Modal from "@/components/Modal";
 import EpisodeScore from "./EpisodeScore";
 import { IRule } from "@/app/models/Rule";
 import { IPlayer } from "@/app/models/Player";
+import { addScore } from "@/app/api/scores/actions";
 
 export default async function EditScore({
   params,
@@ -16,6 +17,7 @@ export default async function EditScore({
   params: { leagueId: ObjectId };
 }) {
   const leagueInfo = await getLeagueInfo(params.leagueId);
+  console.log(leagueInfo.episodes[0].score)
   const numOfEpisodes = leagueInfo.episodes.length + 1;
   const rules = leagueInfo.rules.map((rule: IRule) => {
     return { _id: rule._id.toString(), rule: rule.rule, value: rule.value };
@@ -32,7 +34,7 @@ export default async function EditScore({
     <>
       <Link
         href={`/league-info/${params.leagueId}`}
-        className="text-blue-500 hover:text-yellow-400 text-4xl"
+        className="text-4xl text-blue-500 hover:text-yellow-400"
       >
         {leagueInfo.name}
       </Link>
@@ -47,7 +49,7 @@ export default async function EditScore({
         {leagueInfo.episodes.map((episode: IEpisode) => {
           return (
             <div key={episode._id}>
-              <EpisodeScore number={episode.number} rules={rules} players={players}/>
+              <EpisodeScore number={episode.number} rules={rules} players={players} episodeId={episode._id.toString()} addScore={addScore}/>
             </div>
           );
         })}

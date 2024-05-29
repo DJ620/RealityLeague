@@ -31,6 +31,14 @@ export async function getLeagueInfo(leagueId: ObjectId) {
       path: "episodes",
       populate: {
         path: "score",
+        populate: [
+          {
+            path: "rule",
+          },
+          {
+            path: "player",
+          },
+        ],
       },
     });
   return league;
