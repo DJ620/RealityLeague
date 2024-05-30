@@ -5,6 +5,7 @@ import { useState } from "react";
 import NewScore from "./NewScore";
 import { ObjectId } from "mongoose";
 import { IEpisode } from "@/app/models/Episode";
+import { SerialEpisode } from "./page";
 
 export type rule = {
   _id: string;
@@ -19,35 +20,34 @@ export type player = {
 };
 
 export default function EpisodeScore({
-  number,
   rules,
   players,
-  episodeId,
   addScore,
+  episode
 }: {
-  number: number;
   rules: rule[];
   players: player[];
-  episodeId: string,
   addScore: (
     ruleId: string,
     playerId: string,
     episodeId: string
   ) => Promise<IEpisode>;
+  episode: SerialEpisode;
 }) {
   const [showModal, setShowModal] = useState<boolean>(false);
+
   return (
     <>
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <NewScore
-          number={number}
+          number={episode.number}
           rules={rules}
           players={players}
-          episodeId={episodeId}
+          episodeId={episode._id}
           addScore={addScore}
         />
       </Modal>
-      <h2 className="text-2xl">Episode {number}</h2>
+      <h2 className="text-2xl">Episode {episode.number}</h2>
       <button onClick={() => setShowModal(true)}>Add Score</button>
     </>
   );

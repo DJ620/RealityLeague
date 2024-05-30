@@ -10,6 +10,26 @@ import EpisodeScore from "./EpisodeScore";
 import { IRule } from "@/app/models/Rule";
 import { IPlayer } from "@/app/models/Player";
 import { addScore } from "@/app/api/scores/actions";
+import { ILeague } from "@/app/models/League";
+import { IScore } from "@/app/models/Score";
+
+export type SerialEpisode = {
+  _id: string;
+  number: number;
+  score: {
+    _id: string;
+    rule: {
+      _id: string;
+      rule: string;
+      value: number;
+    };
+    player: {
+      _id: string;
+      name: string;
+      isActive: boolean;
+    };
+  };
+};
 
 export default async function EditScore({
   params,
@@ -17,7 +37,28 @@ export default async function EditScore({
   params: { leagueId: ObjectId };
 }) {
   const leagueInfo = await getLeagueInfo(params.leagueId);
-  console.log(leagueInfo.episodes[0].score)
+  const episodes = leagueInfo.episodes.map((episode: IEpisode) => {
+    return {
+      _id: episode._id.toString(),
+      number: episode.number,
+      score: episode.score.map((score: IScore) => {
+        return {
+          _id: score._id.toString(),
+          rule: {
+            _id: score.rule._id.toString(),
+            rule: score.rule.rule,
+            value: score.rule.value,
+          },
+          player: {
+            _id: score.player._id.toString(),
+            name: score.player.name,
+            isActive: score.player.isActive,
+          },
+        };
+      }),
+    };
+  });
+  console.log(episodes);
   const numOfEpisodes = leagueInfo.episodes.length + 1;
   const rules = leagueInfo.rules.map((rule: IRule) => {
     return { _id: rule._id.toString(), rule: rule.rule, value: rule.value };
@@ -46,10 +87,15 @@ export default async function EditScore({
       />
 
       <div>
-        {leagueInfo.episodes.map((episode: IEpisode) => {
+        {episodes.map((episode: SerialEpisode) => {
           return (
             <div key={episode._id}>
-              <EpisodeScore number={episode.number} rules={rules} players={players} episodeId={episode._id.toString()} addScore={addScore}/>
+              <EpisodeScore
+                rules={rules}
+                players={players}
+                addScore={addScore}
+                episode={episode}
+              />
             </div>
           );
         })}
