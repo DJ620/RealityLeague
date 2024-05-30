@@ -13,22 +13,24 @@ import { addScore } from "@/app/api/scores/actions";
 import { ILeague } from "@/app/models/League";
 import { IScore } from "@/app/models/Score";
 
+export type SerialScore = {
+  _id: string;
+  rule: {
+    _id: string;
+    rule: string;
+    value: number;
+  };
+  player: {
+    _id: string;
+    name: string;
+    isActive: boolean;
+  };
+};
+
 export type SerialEpisode = {
   _id: string;
   number: number;
-  score: {
-    _id: string;
-    rule: {
-      _id: string;
-      rule: string;
-      value: number;
-    };
-    player: {
-      _id: string;
-      name: string;
-      isActive: boolean;
-    };
-  };
+  score: SerialScore[];
 };
 
 export default async function EditScore({

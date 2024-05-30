@@ -5,7 +5,7 @@ import { useState } from "react";
 import NewScore from "./NewScore";
 import { ObjectId } from "mongoose";
 import { IEpisode } from "@/app/models/Episode";
-import { SerialEpisode } from "./page";
+import { SerialEpisode, SerialScore } from "./page";
 
 export type rule = {
   _id: string;
@@ -48,6 +48,17 @@ export default function EpisodeScore({
         />
       </Modal>
       <h2 className="text-2xl">Episode {episode.number}</h2>
+      <div>
+        {episode.score.map((score: SerialScore) => {
+          return (
+            <div key={score._id}>
+              <p>{score.rule.rule}</p>
+              <p>{score.rule.value}</p>
+              <p>{score.player.name}</p>
+            </div>
+          )
+        })}
+      </div>
       <button onClick={() => setShowModal(true)}>Add Score</button>
     </>
   );
