@@ -23,10 +23,10 @@ export default function NewEpisode({
   };
 
   return (
-    <div className="mb-5 pb-8 border-b border-yellow-400">
+    <div className="mb-8">
       <button
         onClick={handleAddNewEpisode}
-        className="font-extrabold p-3 rounded mt-5 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-yellow-400"
+        className="p-3 mt-5 font-extrabold text-yellow-400 bg-blue-700 rounded hover:bg-blue-800 active:bg-blue-900"
       >
         Add New Episode
       </button>

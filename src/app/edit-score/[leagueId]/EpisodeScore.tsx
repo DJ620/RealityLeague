@@ -23,7 +23,7 @@ export default function EpisodeScore({
   rules,
   players,
   addScore,
-  episode
+  episode,
 }: {
   rules: rule[];
   players: player[];
@@ -47,19 +47,36 @@ export default function EpisodeScore({
           addScore={addScore}
         />
       </Modal>
-      <h2 className="text-2xl">Episode {episode.number}</h2>
+      <div className="flex items-center justify-between pb-3 min-w-[595px]">
+        <h2 className="text-2xl">Episode {episode.number}</h2>
+        <button
+          onClick={() => setShowModal(true)}
+          className="p-1 mr-5 font-extrabold text-yellow-400 bg-blue-700 rounded hover:bg-blue-800 active:bg-blue-900"
+        >
+          Add Score
+        </button>
+      </div>
       <div>
-        {episode.score.map((score: SerialScore) => {
+        {episode.score.map((score: SerialScore, index: number) => {
           return (
-            <div key={score._id}>
-              <p>{score.rule.rule}</p>
-              <p>{score.rule.value}</p>
-              <p>{score.player.name}</p>
+            <div
+              key={score._id}
+              className={`flex items-center px-5 py-2 border-t`}
+            >
+              <p className="w-24 font-bold text-blue-500">
+                {score.player.name}
+              </p>
+              <p className="font-bold text-yellow-400 w-60">
+                {score.rule.rule}
+              </p>
+              <p className="w-32">Point value: {score.rule.value}</p>
+              <button className="p-1 text-sm bg-red-500 rounded hover:bg-red-600 active:bg-red-700">
+                Delete Score
+              </button>
             </div>
-          )
+          );
         })}
       </div>
-      <button onClick={() => setShowModal(true)}>Add Score</button>
     </>
   );
 }

@@ -17,5 +17,5 @@ export async function addEpisode(
     { _id: leagueId },
     { $push: { episodes: newEpisode._id } }
   );
-  return updatedLeague;
+  return updatedLeague._id.toString();
 }

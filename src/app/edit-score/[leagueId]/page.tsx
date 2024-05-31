@@ -60,7 +60,6 @@ export default async function EditScore({
       }),
     };
   });
-  console.log(episodes);
   const numOfEpisodes = leagueInfo.episodes.length + 1;
   const rules = leagueInfo.rules.map((rule: IRule) => {
     return { _id: rule._id.toString(), rule: rule.rule, value: rule.value };
@@ -88,10 +87,10 @@ export default async function EditScore({
         number={numOfEpisodes}
       />
 
-      <div>
-        {episodes.map((episode: SerialEpisode) => {
+      <div className="border-t-2 border-yellow-400 w-fit">
+        {episodes.map((episode: SerialEpisode, index: number) => {
           return (
-            <div key={episode._id}>
+            <div key={episode._id} className="pt-5 pb-3 border-b-2 border-yellow-400 w-fit">
               <EpisodeScore
                 rules={rules}
                 players={players}
