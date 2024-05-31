@@ -1,5 +1,7 @@
+import { IEpisode } from "@/app/models/Episode";
 import { ILeagueSelections } from "@/app/models/LeagueSelections";
 import { IPlayer } from "@/app/models/Player";
+import { IScore } from "@/app/models/Score";
 import { IUser } from "@/app/models/User";
 import { ObjectId } from "mongoose";
 import React from "react";
@@ -7,21 +9,42 @@ import React from "react";
 export default function UserStats({
   participant,
   leagueId,
+  episodes,
 }: {
   participant: IUser;
   leagueId: string;
+  episodes: IEpisode[];
 }) {
   const leaguePlayers = participant.leagues.filter(
     (league: ILeagueSelections) => {
       return league.league._id.toString() === leagueId;
     }
   )[0]?.players;
+  const episodeTotals = episodes.map((episode: IEpisode, index: number) => {
+    let totalScore = 0;
+    episode.score.forEach((score: IScore) => {
+      if (
+        leaguePlayers
+          .map((player: IPlayer) => player._id.toString())
+          .includes(score.player._id.toString())
+      ) {
+        totalScore += score.rule.value;
+      }
+    });
+    return { episode: episode.number, totalScore };
+  });
+  console.log(episodeTotals);
+  console.log(
+    episodeTotals
+      .map((episodeTotal: any) => episodeTotal.totalScore)
+      .reduce((a: any, b: any) => a + b)
+  );
   return (
     <div className="flex">
-      <p className="font-extrabold text-yellow-400 w-36 mr-10 border-r">
+      {/* <p className="mr-10 font-extrabold text-yellow-400 border-r min-w-36">
         {participant.username}
-      </p>
-      <div className="w-64 mr-10 border-r">
+      </p> */}
+      {/* <div className="mr-10 border-r min-w-64">
         <div className="flex flex-wrap gap-3">
           {leaguePlayers
             .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
@@ -40,8 +63,21 @@ export default function UserStats({
               );
             })}
         </div>
+      </div> */}
+      <div className="flex pt-2 border-t border-blue-500">
+        {episodeTotals.map((total: any, index: number) => {
+          return (
+            <p
+              key={total.episode}
+              className={`mr-10 border-r ${
+                index == 0 ? "pl-5 min-w-28" : "min-w-24"
+              }`}
+            >
+              {total.totalScore}
+            </p>
+          );
+        })}
       </div>
-      <p className="">Score goes here</p>
     </div>
   );
 }

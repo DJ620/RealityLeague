@@ -20,6 +20,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.30",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20",
     "@types/react": "^18",

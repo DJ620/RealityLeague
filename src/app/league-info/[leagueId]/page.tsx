@@ -17,6 +17,8 @@ import RequestToJoin from "./RequestToJoin";
 import HandleRequest from "./HandleRequest";
 import LeaveLeague from "./LeaveLeague";
 import UserStats from "./UserStats";
+import { IEpisode } from "@/app/models/Episode";
+import UserPlayers from "./UserPlayers";
 
 export default async function LeagueInfo({
   params,
@@ -42,7 +44,7 @@ export default async function LeagueInfo({
     <>
       <Loader loading={loading} />
       <div>
-        <p className="text-center text-4xl mb-5">{leagueInfo.name}</p>
+        <p className="mb-5 text-4xl text-center">{leagueInfo.name}</p>
 
         <div className="mb-5">
           <p>Moderator(s):</p>
@@ -51,47 +53,153 @@ export default async function LeagueInfo({
           })}
         </div>
 
-        <div className="bg-slate-800 rounded-sm p-2 mb-5  outline-blue-500 outline border border-yellow-400">
-          <div className="mb-3 border-b-2 pb-3 border-b-yellow-400">
-            {leagueInfo.participants.length > 0 && (
+        {leagueInfo.participants.length > 0 && (
+          <div className="p-2 mb-5 border border-yellow-400 rounded-sm bg-slate-800 outline-blue-500 outline">
+            <div>
               <div className="flex pb-2">
-                <p className="text-xl w-36 mr-10 border-r">Participants:</p>
-                <p className="text-xl w-64 mr-10 border-r">Players:</p>
-                <p className="text-xl">Score:</p>
+                <div>
+                  <p className="mb-2 mr-10 text-xl border-r min-w-36">
+                    Participants:
+                  </p>
+                  {leagueInfo.participants.map((participant: IUser) => {
+                    return (
+                      <div
+                        key={participant._id}
+                        className="pt-2 border-t border-blue-500"
+                      >
+                        <p className="mr-10 font-extrabold text-yellow-400 border-r min-w-36">
+                          {participant.username}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div>
+                  <p className="mb-2 text-xl border-r min-w-64">
+                    Players:
+                  </p>
+                  {leagueInfo.participants.map((participant: IUser) => {
+                    return (
+                      <div className="pt-2 border-t border-blue-500">
+                      <div
+                        key={participant._id}
+                        className="border-r min-w-64"
+                      >
+                        <UserPlayers
+                          leagueInfo={leagueInfo}
+                          participant={participant}
+                        />
+                      </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="overflow-x-scroll">
+                  <div className="flex">
+                    {leagueInfo.episodes.map((episode: IEpisode, index: number) => {
+                      return (
+                        <p
+                          key={episode._id}
+                          className={`mb-2 mr-10 h-7 pt-0.5 border-r ${index == 0 ? "pl-5 min-w-28" : "min-w-24"}`}
+                        >
+                          Episode {episode.number}
+                        </p>
+                      );
+                    })}
+                  </div>
+                  <div >
+                    {leagueInfo.participants.map((participant: IUser) => {
+                      return (
+                        <div
+                          key={participant._id}
+                        >
+                          <UserStats
+                            participant={participant}
+                            leagueId={leagueInfo._id.toString()}
+                            episodes={leagueInfo.episodes}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {
+                leagueInfo.participants.length > 0 && <></>
+                // leagueInfo.participants.map((participant: IUser) => {
+                //   return (
+                //     <div
+                //       key={participant._id}
+                //       className="pt-2 border-t border-blue-500"
+                //     >
+                //       <UserStats
+                //         participant={participant}
+                //         leagueId={leagueInfo._id.toString()}
+                //         episodes={leagueInfo.episodes}
+                //       />
+                //     </div>
+                //   );
+                // })
+              }
+            </div>
+          </div>
+        )}
+
+        <div className="flex justify-around h-fit">
+          <div className="h-full pb-5 mb-5 w-fit">
+            {leagueInfo.players.length > 0 && (
+              <p className="pb-3 text-xl">Players:</p>
+            )}
+            <div>
+              {leagueInfo.players
+                .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
+                .map((player: IPlayer) => {
+                  return (
+                    <div key={player._id} className="px-5 py-2 border-t">
+                      <p
+                        className={`font-bold ${
+                          player.isActive ? "text-blue-500" : "text-red-500"
+                        }`}
+                      >
+                        {player.name}
+                      </p>
+                    </div>
+                  );
+                })}
+            </div>
+            {isModerator && (
+              <div className="self-end pt-4 border-t">
+                <Link
+                  href={`/edit-players/${params.leagueId}`}
+                  className="text-red-400"
+                >
+                  Edit Players
+                </Link>
               </div>
             )}
-            {leagueInfo.participants.length > 0 &&
-              leagueInfo.participants.map((participant: IUser) => {
+          </div>
+
+          <div className="w-fit">
+            {leagueInfo.rules.length > 0 && (
+              <p className="pb-3 text-xl">Rules:</p>
+            )}
+            <div className="">
+              {leagueInfo.rules.map((rule: IRule) => {
                 return (
-                  <div
-                    key={participant._id}
-                    className="border-t pt-2 border-blue-500"
-                  >
-                    <UserStats
-                      participant={participant}
-                      leagueId={leagueInfo._id.toString()}
-                    />
+                  <div key={rule._id} className="flex px-5 py-2 border-t">
+                    <p className="font-extrabold text-blue-500 w-60">
+                      {rule.rule}
+                    </p>
+                    <p className="text-yellow-400">Point value: {rule.value}</p>
                   </div>
                 );
               })}
-          </div>
-
-          <div>
-            {leagueInfo.rules.length > 0 && (
-              <p className="text-xl pb-3">Rules:</p>
-            )}
-            {leagueInfo.rules.map((rule: IRule) => {
-              return (
-                <div key={rule._id} className="flex border-t px-5 py-2">
-                  <p className="text-blue-500 font-extrabold w-[90%]">
-                    {rule.rule}
-                  </p>
-                  <p className="text-yellow-400">Point value: {rule.value}</p>
-                </div>
-              );
-            })}
+            </div>
             {isModerator && (
-              <div className="border-t pt-4">
+              <div className="pt-4 border-t">
                 <Link
                   href={`/edit-rules/${params.leagueId}`}
                   className="text-red-400"
@@ -101,40 +209,6 @@ export default async function LeagueInfo({
               </div>
             )}
           </div>
-        </div>
-
-        <div className="mb-5 pb-5 w-fit">
-          {leagueInfo.players.length > 0 && (
-            <p className="text-xl mb-1">Players:</p>
-          )}
-          <div className="flex gap-3">
-            {leagueInfo.players
-              .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
-              .map((player: IPlayer, index: number) => {
-                return (
-                  <div key={player._id} className="py-1 flex gap-3">
-                    <p
-                      className={`font-bold ${
-                        player.isActive ? "text-blue-500" : "text-red-500"
-                      }`}
-                    >
-                      {player.name}
-                    </p>
-                    {index < leagueInfo.players.length - 1 && <p>|</p>}
-                  </div>
-                );
-              })}
-          </div>
-          {isModerator && (
-            <div className="pt-4">
-              <Link
-                href={`/edit-players/${params.leagueId}`}
-                className="text-red-400"
-              >
-                Edit Players
-              </Link>
-            </div>
-          )}
         </div>
 
         {isMember ? (
