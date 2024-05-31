@@ -9,7 +9,7 @@ import Modal from "@/components/Modal";
 import EpisodeScore from "./EpisodeScore";
 import { IRule } from "@/app/models/Rule";
 import { IPlayer } from "@/app/models/Player";
-import { addScore } from "@/app/api/scores/actions";
+import { addScore, deleteScore } from "@/app/api/scores/actions";
 import { ILeague } from "@/app/models/League";
 import { IScore } from "@/app/models/Score";
 
@@ -88,13 +88,14 @@ export default async function EditScore({
       />
 
       <div className="border-t-2 border-yellow-400 w-fit">
-        {episodes.map((episode: SerialEpisode, index: number) => {
+        {episodes.map((episode: SerialEpisode) => {
           return (
             <div key={episode._id} className="pt-5 pb-3 border-b-2 border-yellow-400 w-fit">
               <EpisodeScore
                 rules={rules}
                 players={players}
                 addScore={addScore}
+                deleteScore={deleteScore}
                 episode={episode}
               />
             </div>

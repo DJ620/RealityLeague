@@ -6,6 +6,7 @@ import NewScore from "./NewScore";
 import { ObjectId } from "mongoose";
 import { IEpisode } from "@/app/models/Episode";
 import { SerialEpisode, SerialScore } from "./page";
+import { useRouter } from "next/navigation";
 
 export type rule = {
   _id: string;
@@ -23,6 +24,7 @@ export default function EpisodeScore({
   rules,
   players,
   addScore,
+  deleteScore,
   episode,
 }: {
   rules: rule[];
@@ -32,9 +34,16 @@ export default function EpisodeScore({
     playerId: string,
     episodeId: string
   ) => Promise<IEpisode>;
+  deleteScore: (scoreId: string, episodeId: string) => Promise<string>;
   episode: SerialEpisode;
 }) {
+  const router = useRouter();
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  const handleDeleteScore = async (scoreId: string) => {
+    await deleteScore(scoreId, episode._id);
+    router.refresh();
+  };
 
   return (
     <>
@@ -51,7 +60,7 @@ export default function EpisodeScore({
         <h2 className="text-2xl">Episode {episode.number}</h2>
         <button
           onClick={() => setShowModal(true)}
-          className="p-1 mr-5 font-extrabold text-yellow-400 bg-blue-700 rounded hover:bg-blue-800 active:bg-blue-900"
+          className="p-1 mr-5 font-semibold text-yellow-400 bg-blue-700 rounded hover:bg-blue-800 active:bg-blue-900"
         >
           Add Score
         </button>
@@ -70,7 +79,10 @@ export default function EpisodeScore({
                 {score.rule.rule}
               </p>
               <p className="w-32">Point value: {score.rule.value}</p>
-              <button className="p-1 text-sm bg-red-500 rounded hover:bg-red-600 active:bg-red-700">
+              <button
+                onClick={() => handleDeleteScore(score._id)}
+                className="p-1 text-sm bg-red-500 rounded hover:bg-red-600 active:bg-red-700"
+              >
                 Delete Score
               </button>
             </div>
