@@ -19,6 +19,7 @@ import LeaveLeague from "./LeaveLeague";
 import UserStats from "./UserStats";
 import { IEpisode } from "@/app/models/Episode";
 import UserPlayers from "./UserPlayers";
+import TotalPoints from "./TotalPoints";
 
 export default async function LeagueInfo({
   params,
@@ -76,21 +77,19 @@ export default async function LeagueInfo({
                 </div>
 
                 <div>
-                  <p className="mb-2 text-xl border-r min-w-64">
-                    Players:
-                  </p>
+                  <p className="mb-2 text-xl border-r min-w-64">Players:</p>
                   {leagueInfo.participants.map((participant: IUser) => {
                     return (
                       <div className="pt-2 border-t border-blue-500">
-                      <div
-                        key={participant._id}
-                        className="border-r min-w-64"
-                      >
-                        <UserPlayers
-                          leagueInfo={leagueInfo}
-                          participant={participant}
-                        />
-                      </div>
+                        <div
+                          key={participant._id}
+                          className="border-r min-w-64"
+                        >
+                          <UserPlayers
+                            leagueInfo={leagueInfo}
+                            participant={participant}
+                          />
+                        </div>
                       </div>
                     );
                   })}
@@ -98,24 +97,43 @@ export default async function LeagueInfo({
 
                 <div className="overflow-x-scroll">
                   <div className="flex">
-                    {leagueInfo.episodes.map((episode: IEpisode, index: number) => {
+                    {leagueInfo.episodes.map(
+                      (episode: IEpisode, index: number) => {
+                        return (
+                          <p
+                            key={episode._id}
+                            className={`mb-2 mr-5 h-7 pt-0.5 ${
+                              index == 0 ? "pl-5 min-w-[4.5rem] border-r" : index == leagueInfo.episodes.length - 1 ? "min-w-14" : "min-w-14 border-r"
+                            }`}
+                          >
+                            Ep. {episode.number}
+                          </p>
+                        );
+                      }
+                    )}
+                  </div>
+                  <div>
+                    {leagueInfo.participants.map((participant: IUser) => {
                       return (
-                        <p
-                          key={episode._id}
-                          className={`mb-2 mr-10 h-7 pt-0.5 border-r ${index == 0 ? "pl-5 min-w-28" : "min-w-24"}`}
-                        >
-                          Episode {episode.number}
-                        </p>
+                        <div key={participant._id}>
+                          <UserStats
+                            participant={participant}
+                            leagueId={leagueInfo._id.toString()}
+                            episodes={leagueInfo.episodes}
+                          />
+                        </div>
                       );
                     })}
                   </div>
-                  <div >
+                </div>
+
+                <div>
+                  <p className="pl-5 mb-2 text-xl border-l min-w-20">Total:</p>
+                  <div>
                     {leagueInfo.participants.map((participant: IUser) => {
                       return (
-                        <div
-                          key={participant._id}
-                        >
-                          <UserStats
+                        <div key={participant._id}>
+                          <TotalPoints
                             participant={participant}
                             leagueId={leagueInfo._id.toString()}
                             episodes={leagueInfo.episodes}

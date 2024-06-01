@@ -69,8 +69,8 @@ export default function UserStats({
           return (
             <p
               key={total.episode}
-              className={`mr-10 border-r ${
-                index == 0 ? "pl-5 min-w-28" : "min-w-24"
+              className={`text-center pr-4 mr-5 ${
+                index == 0 ? "pl-5 min-w-[4.5rem] border-r" : index == episodeTotals.length - 1 ? "min-w-14" : "min-w-14 border-r"
               }`}
             >
               {total.totalScore}
