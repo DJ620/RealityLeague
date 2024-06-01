@@ -55,9 +55,9 @@ export default async function LeagueInfo({
         </div>
 
         {leagueInfo.participants.length > 0 && (
-          <div className="p-2 mb-5 border border-yellow-400 rounded-sm bg-slate-800 outline-blue-500 outline">
+          <div className="max-w-full p-2 mx-auto mb-5 border border-yellow-400 rounded-sm bg-slate-800 outline-blue-500 outline w-fit">
             <div>
-              <div className="flex pb-2">
+              <div className="flex">
                 <div>
                   <p className="mb-2 mr-10 text-xl border-r min-w-36">
                     Participants:
@@ -68,7 +68,7 @@ export default async function LeagueInfo({
                         key={participant._id}
                         className="pt-2 border-t border-blue-500"
                       >
-                        <p className="mr-10 font-extrabold text-yellow-400 border-r min-w-36">
+                        <p className="mb-2 mr-10 font-extrabold text-yellow-400 border-r min-w-36">
                           {participant.username}
                         </p>
                       </div>
@@ -83,7 +83,7 @@ export default async function LeagueInfo({
                       <div className="pt-2 border-t border-blue-500">
                         <div
                           key={participant._id}
-                          className="border-r min-w-64"
+                          className="mb-2 border-r min-w-64"
                         >
                           <UserPlayers
                             leagueInfo={leagueInfo}

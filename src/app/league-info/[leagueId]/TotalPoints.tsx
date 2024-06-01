@@ -37,7 +37,7 @@ export default function TotalPoints({
     .reduce((a: any, b: any) => a + b);
   return (
       <div className="pt-2 border-t border-blue-500">
-        <p className="pl-5 pr-4 text-center border-l min-w-20">{grandTotal}</p>
+        <p className="pl-5 pr-4 mb-2 text-center border-l min-w-20">{grandTotal}</p>
       </div>
   );
 }

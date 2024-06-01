@@ -33,12 +33,6 @@ export default function UserStats({
     });
     return { episode: episode.number, totalScore };
   });
-  console.log(episodeTotals);
-  console.log(
-    episodeTotals
-      .map((episodeTotal: any) => episodeTotal.totalScore)
-      .reduce((a: any, b: any) => a + b)
-  );
   return (
     <div className="flex">
       {/* <p className="mr-10 font-extrabold text-yellow-400 border-r min-w-36">
@@ -69,7 +63,7 @@ export default function UserStats({
           return (
             <p
               key={total.episode}
-              className={`text-center pr-4 mr-5 ${
+              className={`text-center pr-4 mr-5 mb-2 ${
                 index == 0 ? "pl-5 min-w-[4.5rem] border-r" : index == episodeTotals.length - 1 ? "min-w-14" : "min-w-14 border-r"
               }`}
             >
