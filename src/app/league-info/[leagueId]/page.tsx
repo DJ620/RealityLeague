@@ -77,14 +77,16 @@ export default async function LeagueInfo({
                 </div>
 
                 <div>
-                  <p className="flex items-center justify-center -ml-10 text-xl border-r-2 h-9 border-r-yellow-400 min-w-64">Players:</p>
+                  <p className="flex items-center justify-center -ml-10 text-xl border-r-2 h-9 border-r-yellow-400 min-w-64">
+                    Players:
+                  </p>
                   {leagueInfo.participants.map((participant: IUser) => {
                     return (
-                      <div className="border-t border-blue-500">
-                        <div
-                          key={participant._id}
-                          className="flex items-center justify-center h-10 -ml-10 border-r-2 border-r-yellow-400 min-w-64"
-                        >
+                      <div
+                        key={participant._id}
+                        className="border-t border-blue-500"
+                      >
+                        <div className="flex items-center justify-center h-10 -ml-10 border-r-2 border-r-yellow-400 min-w-64">
                           <UserPlayers
                             leagueInfo={leagueInfo}
                             participant={participant}
@@ -103,7 +105,11 @@ export default async function LeagueInfo({
                           <p
                             key={episode._id}
                             className={`mr-5 h-9 flex items-center pt-0.5 ${
-                              index == 0 ? "pl-5 min-w-[4.5rem] border-r" : index == leagueInfo.episodes.length - 1 ? "min-w-14" : "min-w-14 border-r"
+                              index == 0
+                                ? "pl-5 min-w-[4.5rem] border-r"
+                                : index == leagueInfo.episodes.length - 1
+                                ? "min-w-14"
+                                : "min-w-14 border-r"
                             }`}
                           >
                             Ep. {episode.number}
@@ -128,7 +134,9 @@ export default async function LeagueInfo({
                 </div>
 
                 <div>
-                  <p className="flex items-center pl-5 text-xl border-l-2 border-l-yellow-400 h-9 min-w-20">Total:</p>
+                  <p className="flex items-center pl-5 text-xl border-l-2 border-l-yellow-400 h-9 min-w-20">
+                    Total:
+                  </p>
                   <div>
                     {leagueInfo.participants.map((participant: IUser) => {
                       return (
