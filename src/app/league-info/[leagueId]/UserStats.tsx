@@ -58,12 +58,12 @@ export default function UserStats({
             })}
         </div>
       </div> */}
-      <div className="flex pt-2 border-t border-blue-500">
+      <div className="flex border-t border-blue-500">
         {episodeTotals.map((total: any, index: number) => {
           return (
             <p
               key={total.episode}
-              className={`text-center pr-4 mr-5 mb-2 ${
+              className={`text-center h-10 flex justify-center items-center pr-4 mr-5 ${
                 index == 0 ? "pl-5 min-w-[4.5rem] border-r" : index == episodeTotals.length - 1 ? "min-w-14" : "min-w-14 border-r"
               }`}
             >

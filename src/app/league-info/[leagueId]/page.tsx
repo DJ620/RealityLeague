@@ -55,20 +55,20 @@ export default async function LeagueInfo({
         </div>
 
         {leagueInfo.participants.length > 0 && (
-          <div className="max-w-full p-2 mx-auto mb-5 border border-yellow-400 rounded-sm bg-slate-800 outline-blue-500 outline w-fit">
+          <div className="max-w-full mx-auto mb-5 border border-yellow-400 rounded-sm bg-slate-800 outline-blue-500 outline w-fit">
             <div>
               <div className="flex">
                 <div>
-                  <p className="mb-2 mr-10 text-xl border-r min-w-36">
+                  <p className="flex items-center justify-center px-1 mr-10 text-xl border-r h-9 min-w-36">
                     Participants:
                   </p>
                   {leagueInfo.participants.map((participant: IUser) => {
                     return (
                       <div
                         key={participant._id}
-                        className="pt-2 border-t border-blue-500"
+                        className="border-t border-blue-500"
                       >
-                        <p className="mb-2 mr-10 font-extrabold text-yellow-400 border-r min-w-36">
+                        <p className="flex items-center justify-center h-10 px-1 mr-10 font-extrabold text-yellow-400 border-r min-w-36">
                           {participant.username}
                         </p>
                       </div>
@@ -77,13 +77,13 @@ export default async function LeagueInfo({
                 </div>
 
                 <div>
-                  <p className="mb-2 text-xl border-r min-w-64">Players:</p>
+                  <p className="flex items-center justify-center -ml-10 text-xl border-r-2 h-9 border-r-yellow-400 min-w-64">Players:</p>
                   {leagueInfo.participants.map((participant: IUser) => {
                     return (
-                      <div className="pt-2 border-t border-blue-500">
+                      <div className="border-t border-blue-500">
                         <div
                           key={participant._id}
-                          className="mb-2 border-r min-w-64"
+                          className="flex items-center justify-center h-10 -ml-10 border-r-2 border-r-yellow-400 min-w-64"
                         >
                           <UserPlayers
                             leagueInfo={leagueInfo}
@@ -102,7 +102,7 @@ export default async function LeagueInfo({
                         return (
                           <p
                             key={episode._id}
-                            className={`mb-2 mr-5 h-7 pt-0.5 ${
+                            className={`mr-5 h-9 flex items-center pt-0.5 ${
                               index == 0 ? "pl-5 min-w-[4.5rem] border-r" : index == leagueInfo.episodes.length - 1 ? "min-w-14" : "min-w-14 border-r"
                             }`}
                           >
@@ -128,7 +128,7 @@ export default async function LeagueInfo({
                 </div>
 
                 <div>
-                  <p className="pl-5 mb-2 text-xl border-l min-w-20">Total:</p>
+                  <p className="flex items-center pl-5 text-xl border-l-2 border-l-yellow-400 h-9 min-w-20">Total:</p>
                   <div>
                     {leagueInfo.participants.map((participant: IUser) => {
                       return (
