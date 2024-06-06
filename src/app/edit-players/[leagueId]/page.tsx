@@ -36,9 +36,9 @@ export default async function EditPlayers({
       </div>
 
       {existingPlayers?.length > 0 && (
-        <p className="mt-5 mb-5 text-2xl">Current Players</p>
+        <p className="mt-5 mb-5 text-2xl text-center">Current Players</p>
       )}
-      <div className="flex flex-wrap gap-5">
+      <div className="flex flex-wrap justify-center gap-5">
         {existingPlayers
           .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
           .map((player: IPlayer) => {

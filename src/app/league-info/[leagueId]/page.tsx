@@ -44,14 +44,16 @@ export default async function LeagueInfo({
   return (
     <>
       <Loader loading={loading} />
-      <div>
-        <p className="mb-5 text-4xl text-center">{leagueInfo.name}</p>
+      <div className="relative">
+        <p className="mb-20 text-4xl font-extrabold text-center">{leagueInfo.name}</p>
 
-        <div className="mb-5">
-          <p>Moderator(s):</p>
-          {leagueInfo.moderators.map((moderator: IUser) => {
-            return <p key={moderator._id}>{moderator.username}</p>;
-          })}
+        <div className="absolute top-0 right-0 text-slate-400">
+          <div>
+            <p>Moderator(s):</p>
+            {leagueInfo.moderators.map((moderator: IUser) => {
+              return <p key={moderator._id}>{moderator.username}</p>;
+            })}
+          </div>
         </div>
 
         {leagueInfo.participants.length > 0 && (
@@ -253,12 +255,12 @@ export default async function LeagueInfo({
         <div className="mt-5">
           {isMember ? (
             <div className="flex justify-center">
-            <LeaveLeague
-              userId={user?.id}
-              leagueId={params.leagueId}
-              leagueName={leagueInfo.name}
-              leaveLeague={leaveLeague}
-            />
+              <LeaveLeague
+                userId={user?.id}
+                leagueId={params.leagueId}
+                leagueName={leagueInfo.name}
+                leaveLeague={leaveLeague}
+              />
             </div>
           ) : isPending ? (
             <p>Pending acceptance</p>
