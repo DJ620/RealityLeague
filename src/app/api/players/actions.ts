@@ -11,14 +11,14 @@ export async function addPlayer(player: string, leagueMongoId: ObjectId) {
     { _id: leagueMongoId },
     { $push: { players: newPlayer._id } }
   );
-  return updatedLeague;
+  return updatedLeague._id.toString();
 }
 
 export async function deletePlayer(playerId: ObjectId) {
   "use server";
   await dbConnect();
   const deletedPlayer = await Player.deleteOne({ _id: playerId });
-  return deletedPlayer;
+  return "deleted";
 }
 
 export async function changePlayerStatus(
