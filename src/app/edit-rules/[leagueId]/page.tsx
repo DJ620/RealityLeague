@@ -18,20 +18,21 @@ export default async function EditRules({
     <>
       <div className="flex justify-center">
         <div>
-          <Link
-            href={`/league-info/${params.leagueId}`}
-            className="text-4xl font-extrabold text-blue-500 hover:text-yellow-400"
-          >
-            {leagueInfo.name}
-          </Link>
-
+          <div className="flex justify-center">
+            <Link
+              href={`/league-info/${params.leagueId}`}
+              className="text-4xl font-extrabold text-blue-500 hover:text-yellow-400"
+            >
+              {leagueInfo.name}
+            </Link>
+          </div>
           <div className="mb-10">
             <p className="my-5 text-2xl">Create New Rule</p>
             <RulesForm addRuleToDB={addRule} leagueId={params.leagueId} />
           </div>
         </div>
       </div>
-      <div className="mb-10 border-t border-yellow-400"/>
+      <div className="mb-10 border-t border-yellow-400" />
       {existingRules?.length > 0 && (
         <p className="mb-5 text-2xl text-center">Current Rules</p>
       )}
