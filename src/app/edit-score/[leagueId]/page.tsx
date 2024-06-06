@@ -74,33 +74,44 @@ export default async function EditScore({
 
   return (
     <>
-      <Link
-        href={`/league-info/${params.leagueId}`}
-        className="text-4xl text-blue-500 hover:text-yellow-400"
-      >
-        {leagueInfo.name}
-      </Link>
+      <div className="flex justify-center">
+        <Link
+          href={`/league-info/${params.leagueId}`}
+          className="text-4xl font-extrabold text-blue-500 hover:text-yellow-400"
+        >
+          {leagueInfo.name}
+        </Link>
+      </div>
 
-      <NewEpisode
-        leagueId={params.leagueId}
-        addEpisode={addEpisode}
-        number={numOfEpisodes}
-      />
+      <div className="flex justify-center mt-2">
+        <NewEpisode
+          leagueId={params.leagueId}
+          addEpisode={addEpisode}
+          number={numOfEpisodes}
+        />
+      </div>
 
-      <div className="border-t-2 border-yellow-400 w-fit">
-        {episodes.map((episode: SerialEpisode) => {
-          return (
-            <div key={episode._id} className="pt-5 pb-3 border-b-2 border-yellow-400 w-fit">
-              <EpisodeScore
-                rules={rules}
-                players={players}
-                addScore={addScore}
-                deleteScore={deleteScore}
-                episode={episode}
-              />
-            </div>
-          );
-        })}
+      <div className="my-5 border-t-2 border-yellow-400" />
+
+      <div className="flex justify-center">
+        <div className="w-fit">
+          {episodes.map((episode: SerialEpisode) => {
+            return (
+              <div
+                key={episode._id}
+                className="pt-5 pb-3 border-b-2 border-yellow-400 w-fit"
+              >
+                <EpisodeScore
+                  rules={rules}
+                  players={players}
+                  addScore={addScore}
+                  deleteScore={deleteScore}
+                  episode={episode}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
