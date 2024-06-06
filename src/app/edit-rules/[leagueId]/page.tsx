@@ -27,7 +27,7 @@ export default async function EditRules({
             </Link>
           </div>
           <div className="mb-10">
-            <p className="my-5 text-2xl">Create New Rule</p>
+            <p className="my-5 text-2xl text-center">Create New Rule</p>
             <RulesForm addRuleToDB={addRule} leagueId={params.leagueId} />
           </div>
         </div>

@@ -23,17 +23,23 @@ export default async function EditPlayers({
 
   return (
     <>
-      <Link
-        href={`/league-info/${params.leagueId}`}
-        className="mb-5 text-4xl font-extrabold text-blue-500 hover:text-yellow-400"
-      >
-        {leagueInfo.name}
-      </Link>
-
-      <div className="pb-8 mb-5 border-b border-b-yellow-400">
-        <p className="my-5 text-2xl">Add New Player </p>
-        <PlayerForm addPlayer={addPlayer} leagueId={params.leagueId} />
+      <div className="flex justify-center">
+        <Link
+          href={`/league-info/${params.leagueId}`}
+          className="mb-5 text-4xl font-extrabold text-blue-500 hover:text-yellow-400"
+        >
+          {leagueInfo.name}
+        </Link>
       </div>
+
+      <div className="flex justify-center">
+        <div className="mb-10">
+          <p className="my-5 text-2xl text-center">Add New Player </p>
+          <PlayerForm addPlayer={addPlayer} leagueId={params.leagueId} />
+        </div>
+      </div>
+
+      <div className="mb-10 border-t border-yellow-400" />
 
       {existingPlayers?.length > 0 && (
         <p className="mt-5 mb-5 text-2xl text-center">Current Players</p>
