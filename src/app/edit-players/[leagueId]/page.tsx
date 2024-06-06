@@ -25,20 +25,20 @@ export default async function EditPlayers({
     <>
       <Link
         href={`/league-info/${params.leagueId}`}
-        className="text-blue-500 hover:text-yellow-400 text-4xl font-extrabold mb-5"
+        className="mb-5 text-4xl font-extrabold text-blue-500 hover:text-yellow-400"
       >
         {leagueInfo.name}
       </Link>
 
-      <div className="mb-5 border-b border-b-yellow-400 pb-8">
-        <p className="text-2xl my-5">Add New Player </p>
+      <div className="pb-8 mb-5 border-b border-b-yellow-400">
+        <p className="my-5 text-2xl">Add New Player </p>
         <PlayerForm addPlayer={addPlayer} leagueId={params.leagueId} />
       </div>
 
       {existingPlayers?.length > 0 && (
         <p className="mt-5 mb-5 text-2xl">Current Players</p>
       )}
-      <div className="flex gap-5 flex-wrap">
+      <div className="flex flex-wrap gap-5">
         {existingPlayers
           .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
           .map((player: IPlayer) => {

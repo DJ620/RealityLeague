@@ -174,17 +174,18 @@ export default async function LeagueInfo({
           </div>
         )}
 
-        <div className="flex justify-around h-fit">
-          <div className="h-full pb-5 mb-5 w-fit">
+        <div className="px-5">
+          <div className="flex flex-wrap justify-center mb-5">
+          <div className="w-fit">
             {leagueInfo.players.length > 0 && (
-              <p className="pb-3 text-xl">Players:</p>
+              <p className="pb-3 text-xl text-center">Players:</p>
             )}
-            <div>
+            <div className="flex flex-wrap justify-center">
               {leagueInfo.players
                 .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
-                .map((player: IPlayer) => {
+                .map((player: IPlayer, index: number) => {
                   return (
-                    <div key={player._id} className="px-5 py-2 border-t">
+                    <div key={player._id} className={`px-5 my-2 ${index < leagueInfo.players.length - 1 && "border-r"}`}>
                       <p
                         className={`font-bold ${
                           player.isActive ? "text-blue-500" : "text-red-500"
@@ -197,7 +198,7 @@ export default async function LeagueInfo({
                 })}
             </div>
             {isModerator && (
-              <div className="self-end pt-4 border-t">
+              <div className="self-end pt-4">
                 <Link
                   href={`/edit-players/${params.leagueId}`}
                   className="text-red-400"
@@ -207,7 +208,9 @@ export default async function LeagueInfo({
               </div>
             )}
           </div>
+          </div>
 
+<div className="flex justify-center">
           <div className="w-fit">
             {leagueInfo.rules.length > 0 && (
               <p className="pb-3 text-xl">Rules:</p>
@@ -225,7 +228,7 @@ export default async function LeagueInfo({
               })}
             </div>
             {isModerator && (
-              <div className="pt-4 border-t">
+              <div className="pt-4">
                 <Link
                   href={`/edit-rules/${params.leagueId}`}
                   className="text-red-400"
@@ -234,6 +237,7 @@ export default async function LeagueInfo({
                 </Link>
               </div>
             )}
+          </div>
           </div>
         </div>
 
