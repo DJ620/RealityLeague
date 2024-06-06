@@ -18,8 +18,13 @@ export default function DeleteLeague({ leagueId, deleteLeague }: props) {
   };
 
   return (
-    <div>
-      <button onClick={handleDeleteLeague}>Delete League</button>
-    </div>
+    <>
+      <button
+        onClick={handleDeleteLeague}
+        className="p-1.5 text-red-500 border rounded-md border-slate-500 bg-slate-700 hover:bg-slate-800 hover:border-slate-600"
+      >
+        Delete League
+      </button>
+    </>
   );
 }

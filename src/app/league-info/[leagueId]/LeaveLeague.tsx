@@ -28,7 +28,7 @@ export default function LeaveLeague({
   };
 
   return (
-    <button onClick={handleLeaveLeague} className="text-red-500">
+    <button onClick={handleLeaveLeague} className="w-40 p-2 text-red-200 bg-red-700 border border-red-500 rounded-md hover:bg-red-800 hover:border-red-600">
       Leave {leagueName}
     </button>
   );

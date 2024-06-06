@@ -175,29 +175,36 @@ export default async function LeagueInfo({
         )}
 
         <div className="px-5">
-          <div className="flex flex-wrap justify-center mb-5">
-          <div className="w-fit">
-            {leagueInfo.players.length > 0 && (
-              <p className="pb-3 text-xl text-center">Players:</p>
-            )}
-            <div className="flex flex-wrap justify-center">
-              {leagueInfo.players
-                .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
-                .map((player: IPlayer, index: number) => {
-                  return (
-                    <div key={player._id} className={`px-5 my-2 ${index < leagueInfo.players.length - 1 && "border-r"}`}>
-                      <p
-                        className={`font-bold ${
-                          player.isActive ? "text-blue-500" : "text-red-500"
+          <div className="flex flex-wrap justify-center pb-5 mb-5 border-b">
+            <div className="w-fit">
+              {leagueInfo.players.length > 0 && (
+                <p className="pb-3 text-xl text-center">Players:</p>
+              )}
+              <div className="flex flex-wrap justify-center">
+                {leagueInfo.players
+                  .sort((a: IPlayer, b: IPlayer) =>
+                    a.name.localeCompare(b.name)
+                  )
+                  .map((player: IPlayer, index: number) => {
+                    return (
+                      <div
+                        key={player._id}
+                        className={`px-5 my-2 ${
+                          index < leagueInfo.players.length - 1 && "border-r"
                         }`}
                       >
-                        {player.name}
-                      </p>
-                    </div>
-                  );
-                })}
-            </div>
-            {isModerator && (
+                        <p
+                          className={`font-bold ${
+                            player.isActive ? "text-blue-500" : "text-red-500"
+                          }`}
+                        >
+                          {player.name}
+                        </p>
+                      </div>
+                    );
+                  })}
+              </div>
+              {/* {isModerator && (
               <div className="self-end pt-4">
                 <Link
                   href={`/edit-players/${params.leagueId}`}
@@ -206,28 +213,30 @@ export default async function LeagueInfo({
                   Edit Players
                 </Link>
               </div>
-            )}
-          </div>
+            )} */}
+            </div>
           </div>
 
-<div className="flex justify-center">
-          <div className="w-fit">
-            {leagueInfo.rules.length > 0 && (
-              <p className="pb-3 text-xl">Rules:</p>
-            )}
-            <div className="">
-              {leagueInfo.rules.map((rule: IRule) => {
-                return (
-                  <div key={rule._id} className="flex px-5 py-2 border-t">
-                    <p className="font-extrabold text-blue-500 w-60">
-                      {rule.rule}
-                    </p>
-                    <p className="text-yellow-400">Point value: {rule.value}</p>
-                  </div>
-                );
-              })}
-            </div>
-            {isModerator && (
+          <div className="flex justify-center">
+            <div className="w-fit">
+              {leagueInfo.rules.length > 0 && (
+                <p className="pb-3 text-xl text-center">Rules:</p>
+              )}
+              <div className="">
+                {leagueInfo.rules.map((rule: IRule) => {
+                  return (
+                    <div key={rule._id} className="flex px-5 py-2 border-t">
+                      <p className="font-extrabold text-blue-500 w-80">
+                        {rule.rule}
+                      </p>
+                      <p className="text-yellow-400">
+                        Point value: {rule.value}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* {isModerator && (
               <div className="pt-4">
                 <Link
                   href={`/edit-rules/${params.leagueId}`}
@@ -236,63 +245,105 @@ export default async function LeagueInfo({
                   Edit Rules
                 </Link>
               </div>
-            )}
-          </div>
+            )} */}
+            </div>
           </div>
         </div>
 
-        {isMember ? (
-          <LeaveLeague
-            userId={user?.id}
-            leagueId={params.leagueId}
-            leagueName={leagueInfo.name}
-            leaveLeague={leaveLeague}
-          />
-        ) : isPending ? (
-          <p>Pending acceptance</p>
-        ) : leagueInfo.isPrivate ? (
-          <RequestToJoin
-            userId={user?.id}
-            leagueId={params.leagueId}
-            leagueName={leagueInfo.name}
-            requestToJoinLeague={requestToJoinLeague}
-          />
-        ) : (
-          <Link href={`/select-players/${user?.id}/${leagueInfo._id}`}>
-            Join {leagueInfo.name}
-          </Link>
-          // <JoinLeague
-          //   userId={user?.id}
-          //   leagueId={params.leagueId}
-          //   leagueName={leagueInfo.name}
-          //   joinLeague={joinLeague}
-          // />
-        )}
-        {isModerator && leagueInfo.requests.length > 0 && (
-          <p>Pending Requests to Join this league:</p>
-        )}
-        {isModerator &&
-          leagueInfo.requests.map((request: IUser) => {
-            return (
-              <div key={request._id} className="flex gap-5">
-                <p>{request.username}</p>
-                <HandleRequest
-                  userId={request._id.toString()}
+        <div className="mt-5">
+          {isMember ? (
+            <div className="flex justify-center">
+            <LeaveLeague
+              userId={user?.id}
+              leagueId={params.leagueId}
+              leagueName={leagueInfo.name}
+              leaveLeague={leaveLeague}
+            />
+            </div>
+          ) : isPending ? (
+            <p>Pending acceptance</p>
+          ) : leagueInfo.isPrivate ? (
+            <RequestToJoin
+              userId={user?.id}
+              leagueId={params.leagueId}
+              leagueName={leagueInfo.name}
+              requestToJoinLeague={requestToJoinLeague}
+            />
+          ) : (
+            <Link href={`/select-players/${user?.id}/${leagueInfo._id}`}>
+              Join {leagueInfo.name}
+            </Link>
+            // <JoinLeague
+            //   userId={user?.id}
+            //   leagueId={params.leagueId}
+            //   leagueName={leagueInfo.name}
+            //   joinLeague={joinLeague}
+            // />
+          )}
+          {isModerator && leagueInfo.requests.length > 0 && (
+            <p>Pending Requests to Join this league:</p>
+          )}
+          {isModerator &&
+            leagueInfo.requests.map((request: IUser) => {
+              return (
+                <div key={request._id} className="flex gap-5">
+                  <p>{request.username}</p>
+                  <HandleRequest
+                    userId={request._id.toString()}
+                    leagueId={params.leagueId}
+                    acceptUserToLeague={acceptUserToLeague}
+                  />
+                </div>
+              );
+            })}
+
+          {isModerator && (
+            <div className="flex items-center justify-center gap-5 pt-5 mt-5 border-t border-yellow-400">
+              {leagueInfo.requests.map((request: IUser) => {
+                return (
+                  <div key={request._id} className="flex gap-5">
+                    <p>{request.username}</p>
+                    <HandleRequest
+                      userId={request._id.toString()}
+                      leagueId={params.leagueId}
+                      acceptUserToLeague={acceptUserToLeague}
+                    />
+                  </div>
+                );
+              })}
+              <div>
+                <Link
+                  href={`/edit-players/${params.leagueId}`}
+                  className="p-2 text-red-500 border rounded-md border-slate-500 bg-slate-700 hover:bg-slate-800 hover:border-slate-600"
+                >
+                  Edit Players
+                </Link>
+              </div>
+              <div>
+                <Link
+                  href={`/edit-rules/${params.leagueId}`}
+                  className="p-2 text-red-500 border rounded-md border-slate-500 bg-slate-700 hover:bg-slate-800 hover:border-slate-600"
+                >
+                  Edit Rules
+                </Link>
+              </div>
+              <div>
+                <Link
+                  href={`/edit-score/${leagueInfo._id}`}
+                  className="p-2 text-red-500 border rounded-md border-slate-500 bg-slate-700 hover:bg-slate-800 hover:border-slate-600"
+                >
+                  Edit Score
+                </Link>
+              </div>
+              <div>
+                <DeleteLeague
                   leagueId={params.leagueId}
-                  acceptUserToLeague={acceptUserToLeague}
+                  deleteLeague={deleteLeague}
                 />
               </div>
-            );
-          })}
-        {isModerator && (
-          <div>
-            <Link href={`/edit-score/${leagueInfo._id}`}>Edit Score</Link>
-            <DeleteLeague
-              leagueId={params.leagueId}
-              deleteLeague={deleteLeague}
-            />
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
