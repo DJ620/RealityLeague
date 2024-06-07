@@ -302,7 +302,7 @@ export default async function LeagueInfo({
               </div>
               <div>
                 <DeleteLeague
-                  leagueId={params.leagueId}
+                  leagueId={params.leagueId.toString()}
                   deleteLeague={deleteLeague}
                 />
               </div>

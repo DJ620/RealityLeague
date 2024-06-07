@@ -10,7 +10,7 @@ type props = {
   leaveLeague: (
     userId: string | undefined,
     leagueId: ObjectId
-  ) => Promise<ILeague>;
+  ) => Promise<string>;
 };
 
 export default function LeaveLeague({

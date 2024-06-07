@@ -63,11 +63,11 @@ export async function addLeague(
   return newLeague._id.toString();
 }
 
-export async function deleteLeague(leagueId: ObjectId) {
+export async function deleteLeague(leagueId: string) {
   "use server";
   await dbConnect();
   const deleted = await League.deleteOne({ _id: leagueId });
-  return deleted;
+  return deleted.acknowledged;
 }
 
 export async function joinLeague(
@@ -155,5 +155,5 @@ export async function leaveLeague(
     { _id: leagueId },
     { $pull: { participants: user._id } }
   );
-  return league;
+  return league._id.toString();
 }

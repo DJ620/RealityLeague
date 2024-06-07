@@ -3,18 +3,17 @@ import { ObjectId } from "mongoose";
 import { useRouter } from "next/navigation";
 
 type props = {
-  leagueId: ObjectId;
-  deleteLeague: (leagueId: ObjectId) => any;
+  leagueId: string;
+  deleteLeague: (leagueId: string) => Promise<boolean>;
 };
 
 export default function DeleteLeague({ leagueId, deleteLeague }: props) {
   const router = useRouter();
 
   const handleDeleteLeague = async () => {
-    deleteLeague(leagueId).then(() => {
-      router.push("/dashboard");
-      router.refresh();
-    });
+    await deleteLeague(leagueId);
+    router.push("/dashboard");
+    router.refresh();
   };
 
   return (
