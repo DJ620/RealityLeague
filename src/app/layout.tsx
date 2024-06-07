@@ -25,7 +25,7 @@ export default function RootLayout({
     >
         <html lang="en">
           <body className="relative">
-            <div className="fixed top-0 w-full bg-black">
+            <div className="fixed top-0 z-10 w-full bg-black">
               <Nav />
             </div>
             <div className="p-10 mt-12">{children}</div>

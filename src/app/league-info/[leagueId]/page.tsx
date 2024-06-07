@@ -236,9 +236,14 @@ export default async function LeagueInfo({
               requestToJoinLeague={requestToJoinLeague}
             />
           ) : (
-            <Link href={`/select-players/${user?.id}/${leagueInfo._id}`}>
-              Join {leagueInfo.name}
-            </Link>
+            <div className="flex justify-center">
+              <Link
+                href={`/select-players/${user?.id}/${leagueInfo._id}`}
+                className="p-2 font-extrabold text-yellow-400 bg-blue-700 rounded hover:bg-blue-800 active:bg-blue-900"
+              >
+                Join {leagueInfo.name}
+              </Link>
+            </div>
           )}
           {isModerator && leagueInfo.requests.length > 0 && (
             <p>Pending Requests to Join this league:</p>
