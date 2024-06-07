@@ -5,12 +5,10 @@ import React from "react";
 import NewEpisode from "./NewEpisode";
 import { addEpisode } from "@/app/api/episodes/actions";
 import { IEpisode } from "@/app/models/Episode";
-import Modal from "@/components/Modal";
 import EpisodeScore from "./EpisodeScore";
 import { IRule } from "@/app/models/Rule";
 import { IPlayer } from "@/app/models/Player";
 import { addScore, deleteScore } from "@/app/api/scores/actions";
-import { ILeague } from "@/app/models/League";
 import { IScore } from "@/app/models/Score";
 
 export type SerialScore = {

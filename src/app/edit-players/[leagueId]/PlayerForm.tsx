@@ -1,6 +1,5 @@
 "use client";
 import { ILeague } from "@/app/models/League";
-import { IPlayer } from "@/app/models/Player";
 import { ObjectId } from "mongoose";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,7 +27,7 @@ export default function PlayerForm({ addPlayer, leagueId }: props) {
           name="player"
           value={player}
           onChange={(e) => setPlayer(e.target.value)}
-          className="text-black p-1"
+          className="p-1 text-black"
         />
       </div>
       <button

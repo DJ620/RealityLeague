@@ -1,6 +1,5 @@
 "use client";
 import { ILeague } from "@/app/models/League";
-import { IRule } from "@/app/models/Rule";
 import { ObjectId } from "mongoose";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -26,7 +25,7 @@ export default function RulesForm({ addRuleToDB, leagueId }: props) {
 
   return (
     <form onSubmit={handleAddRule}>
-      <div className="mb-3 flex items-center">
+      <div className="flex items-center mb-3">
         <label className="w-20">Rule:</label>
         <input
           type="text"
@@ -44,7 +43,7 @@ export default function RulesForm({ addRuleToDB, leagueId }: props) {
           name="value"
           value={value}
           onChange={(e) => setValue(+e.target.value)}
-          className="text-black p-1 w-16"
+          className="w-16 p-1 text-black"
         />
       </div>
       <button

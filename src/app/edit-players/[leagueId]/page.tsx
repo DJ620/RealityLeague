@@ -1,9 +1,6 @@
-import dbConnect from "@/app/lib/dbConnect";
-import League from "@/app/models/League";
-import Player, { IPlayer } from "@/app/models/Player";
+import { IPlayer } from "@/app/models/Player";
 import { ObjectId } from "mongoose";
 import PlayerForm from "./PlayerForm";
-import DeletePlayer from "./DeletePlayer";
 import Link from "next/link";
 import { getLeagueInfo } from "@/app/api/leagues/actions";
 import {

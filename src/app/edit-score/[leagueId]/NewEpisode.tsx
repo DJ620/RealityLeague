@@ -8,10 +8,7 @@ export default function NewEpisode({
   leagueId,
   number,
 }: {
-  addEpisode: (
-    leagueId: ObjectId,
-    number: number,
-  ) => Promise<ILeague>;
+  addEpisode: (leagueId: ObjectId, number: number) => Promise<ILeague>;
   leagueId: ObjectId;
   number: number;
 }) {

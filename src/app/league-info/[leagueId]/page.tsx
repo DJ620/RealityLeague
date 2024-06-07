@@ -45,7 +45,9 @@ export default async function LeagueInfo({
     <>
       <Loader loading={loading} />
       <div className="relative">
-        <p className="mb-20 text-4xl font-extrabold text-center">{leagueInfo.name}</p>
+        <p className="mb-20 text-4xl font-extrabold text-center">
+          {leagueInfo.name}
+        </p>
 
         <div className="absolute top-0 right-0 text-slate-400">
           <div>
@@ -154,24 +156,6 @@ export default async function LeagueInfo({
                   </div>
                 </div>
               </div>
-
-              {
-                leagueInfo.participants.length > 0 && <></>
-                // leagueInfo.participants.map((participant: IUser) => {
-                //   return (
-                //     <div
-                //       key={participant._id}
-                //       className="pt-2 border-t border-blue-500"
-                //     >
-                //       <UserStats
-                //         participant={participant}
-                //         leagueId={leagueInfo._id.toString()}
-                //         episodes={leagueInfo.episodes}
-                //       />
-                //     </div>
-                //   );
-                // })
-              }
             </div>
           </div>
         )}
@@ -206,16 +190,6 @@ export default async function LeagueInfo({
                     );
                   })}
               </div>
-              {/* {isModerator && (
-              <div className="self-end pt-4">
-                <Link
-                  href={`/edit-players/${params.leagueId}`}
-                  className="text-red-400"
-                >
-                  Edit Players
-                </Link>
-              </div>
-            )} */}
             </div>
           </div>
 
@@ -238,16 +212,6 @@ export default async function LeagueInfo({
                   );
                 })}
               </div>
-              {/* {isModerator && (
-              <div className="pt-4">
-                <Link
-                  href={`/edit-rules/${params.leagueId}`}
-                  className="text-red-400"
-                >
-                  Edit Rules
-                </Link>
-              </div>
-            )} */}
             </div>
           </div>
         </div>
@@ -275,12 +239,6 @@ export default async function LeagueInfo({
             <Link href={`/select-players/${user?.id}/${leagueInfo._id}`}>
               Join {leagueInfo.name}
             </Link>
-            // <JoinLeague
-            //   userId={user?.id}
-            //   leagueId={params.leagueId}
-            //   leagueName={leagueInfo.name}
-            //   joinLeague={joinLeague}
-            // />
           )}
           {isModerator && leagueInfo.requests.length > 0 && (
             <p>Pending Requests to Join this league:</p>

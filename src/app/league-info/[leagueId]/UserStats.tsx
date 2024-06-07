@@ -3,7 +3,6 @@ import { ILeagueSelections } from "@/app/models/LeagueSelections";
 import { IPlayer } from "@/app/models/Player";
 import { IScore } from "@/app/models/Score";
 import { IUser } from "@/app/models/User";
-import { ObjectId } from "mongoose";
 import React from "react";
 
 export default function UserStats({
@@ -35,36 +34,17 @@ export default function UserStats({
   });
   return (
     <div className="flex">
-      {/* <p className="mr-10 font-extrabold text-yellow-400 border-r min-w-36">
-        {participant.username}
-      </p> */}
-      {/* <div className="mr-10 border-r min-w-64">
-        <div className="flex flex-wrap gap-3">
-          {leaguePlayers
-            .sort((a: IPlayer, b: IPlayer) => a.name.localeCompare(b.name))
-            .map((player: IPlayer, index: number) => {
-              return (
-                <div key={player._id} className="flex gap-3">
-                  <p
-                    className={`font-bold ${
-                      player.isActive ? "text-blue-500" : "text-red-500"
-                    }`}
-                  >
-                    {player.name}
-                  </p>
-                  {index < leaguePlayers.length - 1 && <p>|</p>}
-                </div>
-              );
-            })}
-        </div>
-      </div> */}
       <div className="flex border-t border-blue-500">
         {episodeTotals.map((total: any, index: number) => {
           return (
             <p
               key={total.episode}
               className={`text-center h-10 flex justify-center items-center pr-4 mr-5 ${
-                index == 0 ? "pl-5 min-w-[4.5rem] border-r" : index == episodeTotals.length - 1 ? "min-w-14" : "min-w-14 border-r"
+                index == 0
+                  ? "pl-5 min-w-[4.5rem] border-r"
+                  : index == episodeTotals.length - 1
+                  ? "min-w-14"
+                  : "min-w-14 border-r"
               }`}
             >
               {total.totalScore}

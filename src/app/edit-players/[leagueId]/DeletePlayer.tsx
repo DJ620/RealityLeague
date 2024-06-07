@@ -18,7 +18,12 @@ export default function DeletePlayer({ playerId, deletePlayer }: props) {
 
   return (
     <>
-      <button onClick={handleDeletePlayer} className="text-sm p-1 bg-red-500 hover:bg-red-600 active:bg-red-700 rounded mt-4">Delete Player</button>
+      <button
+        onClick={handleDeletePlayer}
+        className="p-1 mt-4 text-sm bg-red-500 rounded hover:bg-red-600 active:bg-red-700"
+      >
+        Delete Player
+      </button>
     </>
   );
 }

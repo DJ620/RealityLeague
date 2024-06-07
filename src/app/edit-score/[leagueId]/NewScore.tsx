@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { player, rule } from "./EpisodeScore";
-import { ObjectId } from "mongoose";
 import { IEpisode } from "@/app/models/Episode";
 import { useRouter } from "next/navigation";
 

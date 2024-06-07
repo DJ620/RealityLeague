@@ -1,5 +1,4 @@
 "use client";
-import { IRule } from "@/app/models/Rule";
 import { ObjectId } from "mongoose";
 import { useRouter } from "next/navigation";
 
@@ -17,7 +16,12 @@ export default function DeleteRule({ ruleId, deleteRule }: props) {
   };
   return (
     <>
-      <button onClick={handleDeleteRule} className="text-sm p-1 bg-red-500 hover:bg-red-600 active:bg-red-700 rounded">Delete Rule</button>
+      <button
+        onClick={handleDeleteRule}
+        className="p-1 text-sm bg-red-500 rounded hover:bg-red-600 active:bg-red-700"
+      >
+        Delete Rule
+      </button>
     </>
   );
 }

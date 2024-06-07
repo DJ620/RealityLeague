@@ -3,7 +3,6 @@
 import Modal from "@/components/Modal";
 import { useState } from "react";
 import NewScore from "./NewScore";
-import { ObjectId } from "mongoose";
 import { IEpisode } from "@/app/models/Episode";
 import { SerialEpisode, SerialScore } from "./page";
 import { useRouter } from "next/navigation";
